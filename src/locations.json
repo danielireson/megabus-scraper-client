@@ -1,0 +1,394 @@
+[
+ {
+   "code": 3,
+   "name": "Axminster"
+ },
+ {
+   "code": 4,
+   "name": "Banbury"
+ },
+ {
+   "code": 5,
+   "name": "Barnsley"
+ },
+ {
+   "code": 6,
+   "name": "Bath Spa"
+ },
+ {
+   "code": 7,
+   "name": "Bedford"
+ },
+ {
+   "code": 8,
+   "name": "Birmingham"
+ },
+ {
+   "code": 9,
+   "name": "Birmingham International Airport"
+ },
+ {
+   "code": 128,
+   "name": "Blackburn"
+ },
+ {
+   "code": 250,
+   "name": "Bodmin / St. Austell"
+ },
+ {
+   "code": 10,
+   "name": "Bolton"
+ },
+ {
+   "code": 11,
+   "name": "Bournemouth"
+ },
+ {
+   "code": 12,
+   "name": "Bradford"
+ },
+ {
+   "code": 143,
+   "name": "Brighton"
+ },
+ {
+   "code": 13,
+   "name": "Bristol"
+ },
+ {
+   "code": 225,
+   "name": "Bristol (Aztec)"
+ },
+ {
+   "code": 226,
+   "name": "Bristol (Cribbs Causeway)"
+ },
+ {
+   "code": 227,
+   "name": "Bristol (Filton)"
+ },
+ {
+   "code": 249,
+   "name": "Bristol Airport"
+ },
+ {
+   "code": 14,
+   "name": "Bristol UWE"
+ },
+ {
+   "code": 16,
+   "name": "Camborne"
+ },
+ {
+   "code": 17,
+   "name": "Cambridge"
+ },
+ {
+   "code": 19,
+   "name": "Canterbury"
+ },
+ {
+   "code": 24,
+   "name": "Cheltenham"
+ },
+ {
+   "code": 130,
+   "name": "Chester"
+ },
+ {
+   "code": 25,
+   "name": "Chesterfield"
+ },
+ {
+   "code": 122,
+   "name": "Colchester"
+ },
+ {
+   "code": 27,
+   "name": "Coventry"
+ },
+ {
+   "code": 144,
+   "name": "Crawley"
+ },
+ {
+   "code": 162,
+   "name": "Daventry"
+ },
+ {
+   "code": 30,
+   "name": "Derby"
+ },
+ {
+   "code": 31,
+   "name": "Doncaster"
+ },
+ {
+   "code": 119,
+   "name": "East Dereham"
+ },
+ {
+   "code": 33,
+   "name": "East Midlands Parkway"
+ },
+ {
+   "code": 36,
+   "name": "Exeter"
+ },
+ {
+   "code": 251,
+   "name": "Falmouth"
+ },
+ {
+   "code": 39,
+   "name": "Gloucester"
+ },
+ {
+   "code": 177,
+   "name": "Grantham"
+ },
+ {
+   "code": 42,
+   "name": "Havant"
+ },
+ {
+   "code": 145,
+   "name": "High Wycombe"
+ },
+ {
+   "code": 44,
+   "name": "Honiton"
+ },
+ {
+   "code": 45,
+   "name": "Huddersfield"
+ },
+ {
+   "code": 46,
+   "name": "Hull"
+ },
+ {
+   "code": 123,
+   "name": "Ipswich"
+ },
+ {
+   "code": 178,
+   "name": "Kettering"
+ },
+ {
+   "code": 120,
+   "name": "Kings Lynn"
+ },
+ {
+   "code": 116,
+   "name": "Lancaster"
+ },
+ {
+   "code": 52,
+   "name": "Leeds"
+ },
+ {
+   "code": 53,
+   "name": "Leicester"
+ },
+ {
+   "code": 54,
+   "name": "Liverpool"
+ },
+ {
+   "code": 56,
+   "name": "London"
+ },
+ {
+   "code": 57,
+   "name": "Loughborough"
+ },
+ {
+   "code": 141,
+   "name": "Luton"
+ },
+ {
+   "code": 58,
+   "name": "Manchester"
+ },
+ {
+   "code": 59,
+   "name": "Middlesbrough"
+ },
+ {
+   "code": 60,
+   "name": "Milton Keynes"
+ },
+ {
+   "code": 62,
+   "name": "Newbury"
+ },
+ {
+   "code": 63,
+   "name": "Newcastle"
+ },
+ {
+   "code": 65,
+   "name": "Newquay"
+ },
+ {
+   "code": 150,
+   "name": "Newton Abbot"
+ },
+ {
+   "code": 166,
+   "name": "Northampton"
+ },
+ {
+   "code": 66,
+   "name": "Norwich"
+ },
+ {
+   "code": 67,
+   "name": "Norwich, University of East Anglia"
+ },
+ {
+   "code": 68,
+   "name": "Nottingham"
+ },
+ {
+   "code": 71,
+   "name": "Oxford"
+ },
+ {
+   "code": 72,
+   "name": "Paignton"
+ },
+ {
+   "code": 74,
+   "name": "Penzance"
+ },
+ {
+   "code": 121,
+   "name": "Peterborough"
+ },
+ {
+   "code": 77,
+   "name": "Plymouth"
+ },
+ {
+   "code": 78,
+   "name": "Poole"
+ },
+ {
+   "code": 79,
+   "name": "Portsmouth"
+ },
+ {
+   "code": 80,
+   "name": "Preston"
+ },
+ {
+   "code": 81,
+   "name": "Reading"
+ },
+ {
+   "code": 82,
+   "name": "Redruth"
+ },
+ {
+   "code": 84,
+   "name": "Rugby"
+ },
+ {
+   "code": 86,
+   "name": "Salisbury"
+ },
+ {
+   "code": 88,
+   "name": "Scunthorpe"
+ },
+ {
+   "code": 90,
+   "name": "Sheffield"
+ },
+ {
+   "code": 91,
+   "name": "Silverstone"
+ },
+ {
+   "code": 93,
+   "name": "Southampton"
+ },
+ {
+   "code": 108,
+   "name": "Southampton Airport"
+ },
+ {
+   "code": 165,
+   "name": "St Erth"
+ },
+ {
+   "code": 164,
+   "name": "Stockport"
+ },
+ {
+   "code": 118,
+   "name": "Stoke-On-Trent"
+ },
+ {
+   "code": 96,
+   "name": "Sunderland"
+ },
+ {
+   "code": 98,
+   "name": "Swindon"
+ },
+ {
+   "code": 100,
+   "name": "Taunton"
+ },
+ {
+   "code": 109,
+   "name": "Thetford"
+ },
+ {
+   "code": 101,
+   "name": "Torquay"
+ },
+ {
+   "code": 167,
+   "name": "Towcester"
+ },
+ {
+   "code": 102,
+   "name": "Wakefield/Woolley Edge"
+ },
+ {
+   "code": 103,
+   "name": "Warrington"
+ },
+ {
+   "code": 104,
+   "name": "Weymouth"
+ },
+ {
+   "code": 129,
+   "name": "Wigan"
+ },
+ {
+   "code": 105,
+   "name": "Winchester"
+ },
+ {
+   "code": 136,
+   "name": "Worcester"
+ },
+ {
+   "code": 142,
+   "name": "Worthing"
+ },
+ {
+   "code": 106,
+   "name": "Yeovil Junction"
+ },
+ {
+   "code": 107,
+   "name": "York"
+ }
+]

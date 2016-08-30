@@ -4,6 +4,7 @@ import VueValidator from 'vue-validator'
 import VueResource from 'vue-resource'
 
 import Home from './pages/Home'
+import About from './pages/About'
 
 import {API_DOMAIN, API_ROOT} from './config'
 
@@ -19,6 +20,9 @@ var router = new VueRouter({
 router.map({
   '/': {
     component: Home
+  },
+  '/about': {
+    component: About
   }
 })
 
