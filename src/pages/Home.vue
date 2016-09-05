@@ -69,10 +69,10 @@
 </template>
 
 <script>
-import HeaderComponent from '../components/HeaderComponent'
-import FooterComponent from '../components/FooterComponent'
 import LocationsJson from '../locations.json'
 import Datepicker from 'vue-bulma-datepicker'
+import HeaderComponent from '../components/HeaderComponent'
+import FooterComponent from '../components/FooterComponent'
 
 export default {
   data () {
