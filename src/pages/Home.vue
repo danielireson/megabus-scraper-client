@@ -20,9 +20,9 @@
               <label class="label">Origin</label>
               <p class="control">
                 <span class="select is-fullwidth">
-                  <select v-model="originLocation">
-                    <option disabled selected>Select location</option>
-                    <option v-for="location in locations" value="location.code">{{ location.name }}</option>
+                  <select v-model="searchParams.originLocation">
+                    <option value="" disabled selected>Select location</option>
+                    <option v-for="location in locations" :value="location.name.toLowerCase()">{{ location.name }}</option>
                   </select>
                 </span>
               </p> 
@@ -31,7 +31,7 @@
                 <datepicker 
                   placeholder="Select date" 
                   :config="{ dateFormat: 'd-m-Y' }"
-                  :value.sync="startDate">
+                  :value.sync="searchParams.startDate">
                 </datepicker>
               </div>             
             </div>
@@ -39,9 +39,9 @@
               <label class="label">Destination</label>
               <p class="control">
                 <span class="select is-fullwidth">
-                  <select v-model="destinationLocation">
-                    <option disabled selected>Select location</option>
-                    <option v-for="location in locations" value="location.code">{{ location.name }}</option>
+                  <select v-model="searchParams.destinationLocation">
+                    <option value="" disabled selected>Select location</option>
+                    <option v-for="location in locations" :value="location.name.toLowerCase()">{{ location.name }}</option>
                   </select>
                 </span>
               </p> 
@@ -50,13 +50,13 @@
                 <datepicker 
                   placeholder="Select date" 
                   :config="{ dateFormat: 'd-m-Y' }"
-                  :value.sync="endDate">
+                  :value.sync="searchParams.endDate">
                 </datepicker>
               </div>          
             </div>
           </div>
           <p class="control">
-            <a @click="debug()" class="button is-fullwidth is-primary is-outlined">
+            <a href v-link="{name: 'search', params: searchParams}" class="button is-fullwidth is-primary is-outlined">
               Search for prices
             </a>
           </p>
@@ -78,10 +78,12 @@ export default {
   data () {
     return {
       locations: LocationsJson,
-      originLocation: '',
-      destinationLocation: '',
-      startDate: '',
-      endDate: ''
+      searchParams: {
+        originLocation: '',
+        destinationLocation: '',
+        startDate: '',
+        endDate: ''
+      }
     }
   },
   components: {

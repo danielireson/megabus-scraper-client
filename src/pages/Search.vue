@@ -5,7 +5,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          Searching {{ fields.from | ucfirst }} to {{ fields.to | ucfirst }}
+          Searching {{ searchParams.originLocation | ucfirst }} to {{ searchParams.destinationLocation | ucfirst }}
         </h1>
         <h2 class="subtitle">20/03/2016 - 20/03/2018</h2>
       </div>
@@ -24,12 +24,20 @@ export default {
   data () {
     return {
       locations: LocationsJson,
-      fields: {
-        from: this.$route.params.from,
-        to: this.$route.params.to,
+      searchParams: {
+        originLocation: this.$route.params.originLocation,
+        destinationLocation: this.$route.params.destinationLocation,
         startDate: this.$route.params.startDate,
         endDate: this.$route.params.endDate
       }
+    }
+  },
+  computed: {
+    originCode () {
+      return this.lookupCodeFromLocation(this.searchParams.originLocation)
+    },
+    destinationCode () {
+      return this.lookupCodeFromLocation(this.searchParams.destinationLocation)
     }
   },
   ready () {
@@ -42,10 +50,10 @@ export default {
   methods: {
     validateFields () {
       if (
-        !this.isValidLocation(this.$route.params.from) ||
-        !this.isValidLocation(this.$route.params.to) ||
-        !this.isValidDate(this.$route.params.startDate) ||
-        !this.isValidDate(this.$route.params.endDate)) {
+        !this.isValidLocation(this.searchParams.originLocation) ||
+        !this.isValidLocation(this.searchParams.destinationLocation) ||
+        !this.isValidDate(this.searchParams.startDate) ||
+        !this.isValidDate(this.searchParams.endDate)) {
         this.$route.router.go('/')
       }
     },
@@ -73,6 +81,15 @@ export default {
         }
       }
 
+      return result
+    },
+    lookupCodeFromLocation (string) {
+      let result = false
+      this.locations.forEach(function (location) {
+        if (location.name.toLowerCase() === string) {
+          result = location.code
+        }
+      })
       return result
     }
   }

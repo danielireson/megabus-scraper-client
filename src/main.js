@@ -34,7 +34,7 @@ router.map({
   '/about': {
     component: About
   },
-  '/search/:from/:to/:startDate/:endDate': {
+  '/search/:originLocation/:destinationLocation/:startDate/:endDate': {
     name: 'search',
     component: Search
   }
