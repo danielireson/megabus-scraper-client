@@ -13,7 +13,7 @@ var NotificationStore = {
     let that = this
     this.state.timer = setTimeout(function () {
       that.state.visible = false
-    }, 5000)
+    }, 7000)
   },
   hideMessage: function () {
     this.state.visible = false
