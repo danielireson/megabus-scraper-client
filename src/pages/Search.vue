@@ -7,7 +7,7 @@
         <h1 class="title">
           Searching {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
         </h1>
-        <h2 class="subtitle">20/03/2016 - 20/03/2018</h2>
+        <h2 class="subtitle">{{ searchParams.startDate }} - {{ searchParams.endDate }}</h2>
       </div>
     </div>
   </section>
