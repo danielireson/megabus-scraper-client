@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Search from './pages/Search'
 
-import {API_DOMAIN, API_ROOT} from './config'
+import {API_DOMAIN, API_ROOT, API_KEY} from './config'
 
 Vue.use(VueRouter)
 Vue.use(VueValidator)
@@ -21,6 +21,7 @@ Vue.filter('ucfirst', function (value) {
 // API server config
 Vue.http.options.root = API_DOMAIN + API_ROOT
 Vue.http.options.crossOrigin = true
+Vue.http.headers.common['X-Authorization'] = API_KEY
 
 // Page routes
 var router = new VueRouter({
