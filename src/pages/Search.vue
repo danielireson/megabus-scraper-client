@@ -141,7 +141,7 @@ export default {
     margin-right: 5px;
   }
 
-  // Tablet and mobile
+  // Tablet
   @media only screen and (max-width : 979px) {
     .box {
       border-radius: 0;

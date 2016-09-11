@@ -61,7 +61,7 @@ export default {
     display: none;
   }
 
-  //Medium
+  // Tablet
   @media only screen and (max-width : 980px) {
     .nav-left {
       padding-left: 20px;
@@ -74,7 +74,7 @@ export default {
     }
   }
 
-  //Small
+  // Mobile
   @media only screen and (max-width : 768px) {
     
   }
