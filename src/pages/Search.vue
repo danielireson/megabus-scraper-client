@@ -90,6 +90,11 @@ export default {
           result = true
         }
       })
+
+      if (!result) {
+        this.notification.showMessage('A location passed was not in the Megabus UK station list', 'danger')
+      }
+
       return result
     },
     isValidDate (string) {
@@ -105,6 +110,10 @@ export default {
         if (date) {
           result = true
         }
+      }
+
+      if (!result) {
+        this.notification.showMessage('Dates should formatted as DD/MM/YYYY and be in the future', 'danger')
       }
 
       return result
