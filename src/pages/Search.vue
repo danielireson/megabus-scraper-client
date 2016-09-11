@@ -12,6 +12,29 @@
     </div>
   </section>
 
+  <section class="search-results">
+    <div class="container is-hidden-mobile is-hidden-tablet-only">
+      <div class="columns has-text-centered">
+        <div v-for="day in days" class="column">
+          {{ day }}
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="columns is-block-tablet is-flex-desktop">
+        <div class="column" v-for="i in [1,2,3,4,5,6,7]">
+          <div class="box">
+            <h3 class="search-results-date">12/02/2016</h3>
+            <div class="search-result" v-for="i in [1,2,3,4]">
+              <span class="search-result-time">12:30</span>
+              <a class="button is-small">£12</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer-component></footer-component>
 </template>
 
@@ -24,6 +47,7 @@ export default {
   data () {
     return {
       locations: LocationsJson,
+      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       searchParams: {
         originLocation: this.$route.params.originLocation,
         destinationLocation: this.$route.params.destinationLocation,
@@ -96,6 +120,32 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="scss">
+  .search-results {
+    margin-top: 20px;
+  }
+
+  .search-results-date {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .search-result {
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  .search-result-time {
+    font-size: 11px;
+    margin-right: 5px;
+  }
+
+  // Tablet and mobile
+  @media only screen and (max-width : 979px) {
+    .box {
+      border-radius: 0;
+    }
+  }
 
 </style>
