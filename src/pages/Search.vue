@@ -40,6 +40,7 @@
 
 <script>
 import LocationsJson from '../locations.json'
+import NotificationStore from '../NotificationStore.js'
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
 
@@ -47,6 +48,7 @@ export default {
   data () {
     return {
       locations: LocationsJson,
+      notification: NotificationStore,
       days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       searchParams: {
         originLocation: this.$route.params.originLocation,

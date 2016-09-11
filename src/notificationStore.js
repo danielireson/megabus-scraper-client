@@ -1,28 +1,24 @@
-export default function () {
-  var state = {
-    message: {
-      visible: false,
-      text: ''
-    },
+var NotificationStore = {
+  state: {
+    visible: false,
+    text: '',
+    type: '',
     timer: null
-  }
-
-  function showMessage (text) {
-    state.message.text = text
-    state.message.visible = true
+  },
+  showMessage: function (text, type = 'info') {
+    this.state.text = text
+    this.state.type = type
+    this.state.visible = true
     clearTimeout(this.state.timer)
-    state.timer = setTimeout(function () {
-      state.message.visible = false
+    let that = this
+    this.state.timer = setTimeout(function () {
+      that.state.visible = false
     }, 5000)
-  }
-
-  function hideMessage () {
-    state.message.visible = false
-    state.message.text = ''
-  }
-
-  return {
-    showMessage: showMessage,
-    hideMessage: hideMessage
+  },
+  hideMessage: function () {
+    this.state.visible = false
+    this.state.text = ''
   }
 }
+
+export default NotificationStore

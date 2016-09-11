@@ -26,17 +26,19 @@
     </div>
   </section>
 
-  <div class="notification is-hidden is-success">
-    <button class="delete"></button>
-    Lorem ipsum dolor sit amet.
+  <div v-show="notification.state.visible" class="notification is-{{ notification.state.type }}">
+    <button @click="notification.hideMessage()" class="delete"></button>
+    {{ notification.state.text }}
   </div>
 </template>
 
 <script>
+import NotificationStore from '../NotificationStore.js'
+
 export default {
   data () {
     return {
-      msg: 'Hello World!'
+      notification: NotificationStore
     }
   }
 }
