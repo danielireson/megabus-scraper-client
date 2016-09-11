@@ -14,8 +14,10 @@ Vue.use(VueValidator)
 Vue.use(VueResource)
 
 // Custom filters
-Vue.filter('ucfirst', function (value) {
-  return value.charAt(0).toUpperCase() + value.slice(1)
+Vue.filter('titleCase', function (value) {
+  return value.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
 })
 
 // API server config

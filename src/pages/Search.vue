@@ -5,7 +5,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          Searching {{ searchParams.originLocation | ucfirst }} to {{ searchParams.destinationLocation | ucfirst }}
+          Searching {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
         </h1>
         <h2 class="subtitle">20/03/2016 - 20/03/2018</h2>
       </div>
