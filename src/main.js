@@ -22,7 +22,6 @@ Vue.filter('titleCase', function (value) {
 
 // API server config
 Vue.http.options.root = API_DOMAIN + API_ROOT
-Vue.http.options.crossOrigin = true
 Vue.http.headers.common['X-Authorization'] = API_KEY
 
 // Page routes
