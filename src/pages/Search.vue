@@ -5,7 +5,7 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          Searching {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
+          {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
         </h1>
         <h2 class="subtitle">{{ searchParams.startDate }} - {{ searchParams.endDate }}</h2>
       </div>
@@ -13,24 +13,32 @@
   </section>
 
   <section class="search-results">
-    <div class="container is-hidden-mobile is-hidden-tablet-only">
-      <div class="columns has-text-centered">
+    <div class="container is-hidden-mobile is-hidden-tablet-only has-text-centered">
+      <div class="columns">
         <div v-for="day in days" class="column">
           {{ day }}
         </div>
       </div>
     </div>
     <div class="container">
-      <div class="columns is-block-tablet is-flex-desktop">
-        <div class="column" v-for="i in [1,2,3,4,5,6,7]">
+      <!-- Rows for each week -->
+      <div v-for="row in resultsChunked" class="columns is-block-tablet is-flex-desktop">
+        <!-- Columns for each day of the week -->
+        <div v-for="day in row" class="column">
           <div class="box">
-            <h3 class="search-results-date">12/02/2016</h3>
-            <div class="search-result" v-for="i in [1,2,3,4]">
-              <span class="search-result-time">12:30</span>
-              <a class="button is-small">£12</a>
+            <h3 class="search-results-date">{{ day.date }}</h3>
+            <div v-for="result in day.results" class="search-result">
+              <span class="search-result-time">{{ result.time }}</span>
+              <a class="button is-small">£{{ result.price }}</a>
             </div>
           </div>
         </div>
+        <!-- Generate blank day columns to fill the row  -->
+        <div 
+          v-if="row.length % 7 !== 0"
+          v-for="i in 7 - row.length % 7" 
+          class="column is-hidden-mobile is-hidden-tablet-only">
+        </div> 
       </div>
     </div>
   </section>
@@ -55,7 +63,12 @@ export default {
         destinationLocation: this.$route.params.destinationLocation,
         startDate: this.$route.params.startDate,
         endDate: this.$route.params.endDate
-      }
+      },
+      resultsOld: [
+        ['1', '2', '3', '4', '5', '6', '7'],
+        ['1', '2', '3', '4']
+      ],
+      resultsLong: []
     }
   },
   computed: {
@@ -64,10 +77,21 @@ export default {
     },
     destinationCode () {
       return this.lookupCodeFromLocation(this.searchParams.destinationLocation)
+    },
+    resultsChunked () {
+      // Chunk long array into week arrays
+      // Using computed property because data is returned in promises
+      let resultsChunked = []
+      for (let i = 0; i < this.resultsLong.length; i += 7) {
+        let temp = this.resultsLong.slice(i, i + 7)
+        resultsChunked.push(temp)
+      }
+      return resultsChunked
     }
   },
   ready () {
     this.validateFields()
+    this.getResults()
   },
   components: {
     HeaderComponent,
@@ -76,6 +100,7 @@ export default {
   methods: {
     validateFields () {
       if (
+        !this.isEndDateAfterStartDate() ||
         !this.isValidLocation(this.searchParams.originLocation) ||
         !this.isValidLocation(this.searchParams.destinationLocation) ||
         !this.isValidDate(this.searchParams.startDate) ||
@@ -83,16 +108,22 @@ export default {
         this.$route.router.go('/')
       }
     },
-    isValidLocation (string) {
+    newDateObject (string) {
+      let components = string.split('-')
+      let day = components[0]
+      let month = components[1]
+      let year = components[2]
+      return new Date(year, month - 1, day)
+    },
+    isEndDateAfterStartDate () {
       let result = false
-      this.locations.forEach(function (location) {
-        if (location.name.toLowerCase() === string) {
-          result = true
-        }
-      })
+
+      if (this.newDateObject(this.searchParams.startDate) < this.newDateObject(this.searchParams.endDate)) {
+        result = true
+      }
 
       if (!result) {
-        this.notification.showMessage('A location passed was not in the Megabus UK station list', 'danger')
+        this.notification.showMessage('Search start date is after the end date', 'danger')
       }
 
       return result
@@ -118,6 +149,26 @@ export default {
 
       return result
     },
+    getLengthBetweenDates () {
+      let oneDay = 24 * 60 * 60 * 1000
+      let numberOfDays = Math.abs(this.newDateObject(this.$route.params.startDate).getTime() - this.newDateObject(this.$route.params.endDate).getTime()) / oneDay
+      numberOfDays = Math.round(numberOfDays)
+      return numberOfDays
+    },
+    isValidLocation (string) {
+      let result = false
+      this.locations.forEach(function (location) {
+        if (location.name.toLowerCase() === string) {
+          result = true
+        }
+      })
+
+      if (!result) {
+        this.notification.showMessage('A location passed was not in the Megabus UK station list', 'danger')
+      }
+
+      return result
+    },
     lookupCodeFromLocation (string) {
       let result = false
       this.locations.forEach(function (location) {
@@ -126,6 +177,38 @@ export default {
         }
       })
       return result
+    },
+    getResults () {
+      this.resultsLong = []
+      for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
+        let activeDayObject = this.newDateObject(this.searchParams.startDate)
+        activeDayObject.setDate(activeDayObject.getDate() + day)
+        let activeDateString = activeDayObject.getDate() + '-' + (activeDayObject.getMonth() + 1) + '-' + activeDayObject.getFullYear()
+        this.callScraperApi(activeDateString).then(function (response) {
+          let activeDayResult = {
+            date: activeDateString,
+            results: []
+          }
+
+          for (let i in response.data.data) {
+            activeDayResult.results.push({
+              details: response.data.data[i][0],
+              time: response.data.data[i][1],
+              duration: response.data.data[i][2],
+              price: response.data.data[i][3]
+            })
+          }
+
+          this.resultsLong.push(activeDayResult)
+        })
+      }
+    },
+    callScraperApi (date) {
+      let url = 'search/'
+      url += this.originCode + '/'
+      url += this.destinationCode + '/'
+      url += date
+      return this.$http.get(url)
     }
   }
 }
