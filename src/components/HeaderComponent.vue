@@ -5,7 +5,7 @@
         <div class="container">
           <div class="nav-left">
             <a v-link="'/'" class="header-logo nav-item">
-              Megabus Search
+              <i class="fa fa-search"></i>Megabus Search
             </a>
           </div>
           <div class="nav-right nav-menu">
@@ -55,6 +55,10 @@ export default {
   .header-logo {
     font-size: 18px;
     color: white !important;
+  }
+
+  .header-logo .fa {
+    margin-right: 10px;
   }
 
   .notification {
