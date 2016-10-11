@@ -9,15 +9,20 @@
             </a>
           </div>
           <div class="nav-right nav-menu">
-            <a v-link="'/'" class="nav-item is-active">
-              Home
-            </a>
             <span class="nav-item">
               <a href="https://github.com/danielireson/megabus-scraper-client" class="button is-info is-inverted" target="_blank">
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
-                <span>Source code</span>
+                <span>Client</span>
+              </a>
+            </span>
+            <span class="nav-item">
+              <a href="https://github.com/danielireson/megabus-scraper-server" class="button is-info is-inverted" target="_blank">
+                <span class="icon">
+                  <i class="fa fa-github"></i>
+                </span>
+                <span>Scraper</span>
               </a>
             </span>
           </div>
