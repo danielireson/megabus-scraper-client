@@ -34,7 +34,7 @@
                   <span class="search-result-time">{{ result.time }}</span>
                 </div>
                 <div class="column">                
-                  <a @click.prevent="goToMegabusWebsiteResult(resultsChunked[resultsStructure.indexOf(week)][day].date)" class="button is-small search-result-price">£{{ result.price }}</a>
+                  <a @click.prevent="goToMegabusWebsiteResult(resultsChunked[resultsStructure.indexOf(week)][day].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= firstThirdPriceBound, 'price-medium': result.price > firstThirdPriceBound && result.price <= secondThirdPriceBound, 'price-high': result.price > secondThirdPriceBound}">£{{ result.price }}</a>
                 </div>
               </div>
             </div>
@@ -77,7 +77,11 @@ export default {
         endDate: this.$route.params.endDate
       },
       resultsStructure: [], // Empty array for weeks and day structure
-      resultsLong: [] // Array of day results
+      resultsLong: [], // Array of day results
+      lowestPrice: 999, // High no so the first comparison will set the initial value
+      highestPrice: 0, // Same as above in reverse
+      firstThirdPriceBound: 0,
+      secondThirdPriceBound: 0
     }
   },
   computed: {
@@ -208,6 +212,13 @@ export default {
 
       return resultsChunked
     },
+    callScraperApi (date) {
+      let url = 'search/'
+      url += this.originCode + '/'
+      url += this.destinationCode + '/'
+      url += date
+      return this.$http.get(url)
+    },
     getResults () {
       this.resultsLong = []
       for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
@@ -225,20 +236,33 @@ export default {
               journey: response.data.data[i]['journey'],
               time: response.data.data[i]['time'],
               duration: response.data.data[i]['duration'],
-              price: response.data.data[i]['price']
+              price: parseFloat(response.data.data[i]['price'])
             })
+
+            // Sets highest/lowest prices
+            this.priceCheck(response.data.data[i]['price'])
+            this.setPriceBounds()
           }
 
           this.resultsLong.push(activeDayResult)
         })
       }
     },
-    callScraperApi (date) {
-      let url = 'search/'
-      url += this.originCode + '/'
-      url += this.destinationCode + '/'
-      url += date
-      return this.$http.get(url)
+    priceCheck (price) {
+      price = parseFloat(price)
+      if (price < this.lowestPrice) {
+        this.lowestPrice = price
+      }
+
+      if (price > this.highestPrice) {
+        this.highestPrice = price
+      }
+    },
+    setPriceBounds () {
+      let range = this.highestPrice - this.lowestPrice
+      let thirtyPercent = range / 3
+      this.firstThirdPriceBound = this.lowestPrice + thirtyPercent
+      this.secondThirdPriceBound = this.lowestPrice + thirtyPercent * 2
     },
     goToMegabusWebsiteResult (date) {
       let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
@@ -281,7 +305,33 @@ export default {
   }
 
   .search-result-price {
+    border-color: transparent !important;
+    color: white !important;
     float: left;
+  }
+
+  .price-low {
+    background-color: #27ae60;
+    
+    &:hover {
+      background-color: darken(#27ae60, 5);
+    }
+  }
+
+  .price-medium {
+    background-color: #e6a83c;
+
+    &:hover {
+      background-color: darken(#e6a83c, 5);
+    }
+  }
+
+  .price-high {
+    background-color: #e74c3c;
+
+    &:hover {
+      background-color: darken(#e74c3c, 5);
+    }
   }
 
   // Tablet
