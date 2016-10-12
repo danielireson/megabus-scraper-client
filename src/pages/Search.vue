@@ -38,7 +38,7 @@
                 </div>
               </div>
             </div>
-            <div v-show="!resultsChunked[resultsStructure.indexOf(week)][day].results">
+            <div v-show="resultsChunked[resultsStructure.indexOf(week)][day].results.length === 0">
               No results
             </div>
           </div>
