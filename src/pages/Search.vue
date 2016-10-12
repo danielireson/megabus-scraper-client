@@ -13,7 +13,7 @@
   </section>
 
   <section class="search-results">
-    <div class="container is-hidden-mobile is-hidden-tablet-only has-text-centered">
+    <div class="container has-text-centered is-hidden-mobile is-hidden-tablet-only">
       <div class="columns">
         <div v-for="day in days" class="column">
           {{ day }}
@@ -22,21 +22,25 @@
     </div>
     <div class="container">
       <!-- Rows for each week -->
-      <div v-for="row in resultsChunked" class="columns is-block-tablet is-flex-desktop">
+      <div v-for="week in resultsStructure" class="columns has-text-centered is-block-tablet is-flex-desktop">
         <!-- Columns for each day of the week -->
-        <div v-for="day in row" class="column">
+        <div v-for="day in week" class="column">
           <div class="box">
-            <h3 class="search-results-date">{{ day.date }}</h3>
-            <div v-for="result in day.results" class="search-result">
+            <a v-show="!resultsChunked[resultsStructure.indexOf(week)]" class="button is-loading box-loading"></a>
+            <h3 class="search-results-date">{{ resultsChunked[resultsStructure.indexOf(week)][day].date }}</h3>
+            <div v-show="resultsChunked[resultsStructure.indexOf(week)][day].results" v-for="result in resultsChunked[resultsStructure.indexOf(week)][day].results" class="search-result">
               <span class="search-result-time">{{ result.time }}</span>
               <a class="button is-small">£{{ result.price }}</a>
+            </div>
+            <div v-show="!resultsChunked[resultsStructure.indexOf(week)][day].results">
+              No results
             </div>
           </div>
         </div>
         <!-- Generate blank day columns to fill the row  -->
         <div 
-          v-if="row.length % 7 !== 0"
-          v-for="i in 7 - row.length % 7" 
+          v-if="week.length % 7 !== 0"
+          v-for="i in 7 - week.length % 7" 
           class="column is-hidden-mobile is-hidden-tablet-only">
         </div> 
       </div>
@@ -64,11 +68,8 @@ export default {
         startDate: this.$route.params.startDate,
         endDate: this.$route.params.endDate
       },
-      resultsOld: [
-        ['1', '2', '3', '4', '5', '6', '7'],
-        ['1', '2', '3', '4']
-      ],
-      resultsLong: []
+      resultsStructure: [], // Empty array for weeks and day structure
+      resultsLong: [] // Array of day results
     }
   },
   computed: {
@@ -81,16 +82,12 @@ export default {
     resultsChunked () {
       // Chunk long array into week arrays
       // Using computed property because data is returned in promises
-      let resultsChunked = []
-      for (let i = 0; i < this.resultsLong.length; i += 7) {
-        let temp = this.resultsLong.slice(i, i + 7)
-        resultsChunked.push(temp)
-      }
-      return resultsChunked
+      return this.chunkArrayToWeeks(this.resultsLong)
     }
   },
   ready () {
     this.validateFields()
+    this.makeResultsStructureArray()
     this.getResults()
   },
   components: {
@@ -178,6 +175,31 @@ export default {
       })
       return result
     },
+    makeResultsStructureArray () {
+      // Builds the required column layout before the api returns results
+      let daysArray = []
+      for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
+        daysArray.push(day)
+      }
+
+      // Chunks into weeks then resets the day values to its index in that week
+      let chunkedWeeks = this.chunkArrayToWeeks(daysArray)
+      for (let week = 0; week < chunkedWeeks.length; week++) {
+        for (let day = 0; day < chunkedWeeks[week].length; day++) {
+          chunkedWeeks[week][day] = day
+        }
+      }
+      this.resultsStructure = chunkedWeeks
+    },
+    chunkArrayToWeeks (array) {
+      let resultsChunked = []
+      for (let i = 0; i < array.length; i += 7) {
+        let temp = array.slice(i, i + 7)
+        resultsChunked.push(temp)
+      }
+
+      return resultsChunked
+    },
     getResults () {
       this.resultsLong = []
       for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
@@ -192,10 +214,10 @@ export default {
 
           for (let i in response.data.data) {
             activeDayResult.results.push({
-              details: response.data.data[i][0],
-              time: response.data.data[i][1],
-              duration: response.data.data[i][2],
-              price: response.data.data[i][3]
+              journey: response.data.data[i]['journey'],
+              time: response.data.data[i]['time'],
+              duration: response.data.data[i]['duration'],
+              price: response.data.data[i]['price']
             })
           }
 
@@ -217,6 +239,10 @@ export default {
 <style lang="scss">
   .search-results {
     margin-top: 20px;
+  }
+
+  .box-loading {
+    border: none;
   }
 
   .search-results-date {
