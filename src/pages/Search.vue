@@ -34,7 +34,7 @@
                   <span class="search-result-time">{{ result.time }}</span>
                 </div>
                 <div class="column">                
-                  <a class="button is-small search-result-price">£{{ result.price }}</a>
+                  <a @click.prevent="goToMegabusWebsiteResult(resultsChunked[resultsStructure.indexOf(week)][day].date)" class="button is-small search-result-price">£{{ result.price }}</a>
                 </div>
               </div>
             </div>
@@ -61,6 +61,8 @@ import LocationsJson from '../locations.json'
 import NotificationStore from '../NotificationStore.js'
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
+
+import {BASE_MEGABUS_URL} from '../config'
 
 export default {
   data () {
@@ -237,6 +239,15 @@ export default {
       url += this.destinationCode + '/'
       url += date
       return this.$http.get(url)
+    },
+    goToMegabusWebsiteResult (date) {
+      let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
+      url += '&destinationCode=' + this.destinationCode
+      url += '&outboundDepartureDate=' + this.replaceAll(date, '-', '%2f')
+      window.open(url)
+    },
+    replaceAll (string, target, replacement) {
+      return string.split(target).join(replacement)
     }
   }
 }
