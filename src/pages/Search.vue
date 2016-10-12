@@ -29,8 +29,14 @@
             <a v-show="!resultsChunked[resultsStructure.indexOf(week)]" class="button is-loading box-loading"></a>
             <h3 class="search-results-date">{{ resultsChunked[resultsStructure.indexOf(week)][day].date }}</h3>
             <div v-show="resultsChunked[resultsStructure.indexOf(week)][day].results" v-for="result in resultsChunked[resultsStructure.indexOf(week)][day].results" class="search-result">
-              <span class="search-result-time">{{ result.time }}</span>
-              <a class="button is-small">£{{ result.price }}</a>
+              <div class="columns is-gapless">
+                <div class="column">  
+                  <span class="search-result-time">{{ result.time }}</span>
+                </div>
+                <div class="column">                
+                  <a class="button is-small search-result-price">£{{ result.price }}</a>
+                </div>
+              </div>
             </div>
             <div v-show="!resultsChunked[resultsStructure.indexOf(week)][day].results">
               No results
@@ -247,24 +253,50 @@ export default {
 
   .search-results-date {
     font-weight: bold;
-    text-align: center;
     margin-bottom: 10px;
   }
 
   .search-result {
     margin-bottom: 5px;
-    text-align: center;
   }
 
   .search-result-time {
+    display: block;
     font-size: 11px;
+    height: 24px;
+    line-height: 24px;
     margin-right: 5px;
+    text-align: right;
+  }
+
+  .search-result-price {
+    float: left;
   }
 
   // Tablet
   @media only screen and (max-width : 979px) {
     .box {
       border-radius: 0;
+    }
+
+    .search-result {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .search-result-time {
+      text-align: center;
+    }
+
+    .search-result-price {
+      float: none;
+    }
+  }
+
+  // Mobile
+  @media only screen and (max-width : 768px) {
+    .search-result-time {
+      margin-right: 0;
     }
   }
 
