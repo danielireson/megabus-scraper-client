@@ -154,7 +154,7 @@ export default {
     },
     isValidLocation (string) {
       let result = false
-      this.locations.forEach(function (location) {
+      this.locations.forEach((location) => {
         if (location.name.toLowerCase() === string) {
           result = true
         }
@@ -168,7 +168,7 @@ export default {
     },
     lookupCodeFromLocation (string) {
       let result = false
-      this.locations.forEach(function (location) {
+      this.locations.forEach((location) => {
         if (location.name.toLowerCase() === string) {
           result = location.code
         }
@@ -206,7 +206,7 @@ export default {
         let activeDayObject = this.newDateObject(this.searchParams.startDate)
         activeDayObject.setDate(activeDayObject.getDate() + day)
         let activeDateString = activeDayObject.getDate() + '-' + (activeDayObject.getMonth() + 1) + '-' + activeDayObject.getFullYear()
-        this.callScraperApi(activeDateString).then(function (response) {
+        this.callScraperApi(activeDateString).then((response) => {
           let activeDayResult = {
             date: activeDateString,
             results: []
