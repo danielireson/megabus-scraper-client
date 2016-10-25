@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Search from './pages/Search'
 
-import {API_DOMAIN, API_ROOT, API_KEY} from './config'
+import API_KEY from './config'
 
 Vue.use(VueRouter)
 Vue.use(VueValidator)
@@ -21,7 +21,6 @@ Vue.filter('titleCase', function (value) {
 })
 
 // API server config
-Vue.http.options.root = API_DOMAIN + API_ROOT
 Vue.http.headers.common['X-Authorization'] = API_KEY
 
 // Page routes

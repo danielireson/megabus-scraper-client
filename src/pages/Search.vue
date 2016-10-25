@@ -62,7 +62,7 @@ import NotificationStore from '../NotificationStore.js'
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
 
-import {BASE_MEGABUS_URL} from '../config'
+import {BASE_MEGABUS_URL, API_DOMAIN, API_ROOT} from '../config'
 
 export default {
   data () {
@@ -213,7 +213,7 @@ export default {
       return resultsChunked
     },
     callScraperApi (date) {
-      let url = 'search/'
+      let url = API_DOMAIN + API_ROOT + 'search/'
       url += this.originCode + '/'
       url += this.destinationCode + '/'
       url += date
