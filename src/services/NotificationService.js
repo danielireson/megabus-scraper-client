@@ -1,4 +1,4 @@
-var NotificationStore = {
+var NotificationService = {
   state: {
     visible: false,
     text: '',
@@ -21,4 +21,4 @@ var NotificationStore = {
   }
 }
 
-export default NotificationStore
+export default NotificationService

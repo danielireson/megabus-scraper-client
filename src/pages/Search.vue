@@ -58,9 +58,9 @@
 
 <script>
 import LocationsJson from '../locations.json'
-import NotificationStore from '../NotificationStore.js'
-import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
+import HeaderComponent from '../components/HeaderComponent'
+import NotificationService from '../services/NotificationService.js'
 
 import {BASE_MEGABUS_URL} from '../config'
 
@@ -68,7 +68,7 @@ export default {
   data () {
     return {
       locations: LocationsJson,
-      notification: NotificationStore,
+      notificationService: NotificationService,
       days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       searchParams: {
         originLocation: this.$route.params.originLocation,
@@ -132,7 +132,7 @@ export default {
       }
 
       if (!result) {
-        this.notification.showMessage('Search start date is after the end date', 'danger')
+        this.notificationService.showMessage('Search start date is after the end date', 'danger')
       }
 
       return result
@@ -153,7 +153,7 @@ export default {
       }
 
       if (!result) {
-        this.notification.showMessage('Dates should formatted as DD/MM/YYYY and be in the future', 'danger')
+        this.notificationService.showMessage('Dates should formatted as DD/MM/YYYY and be in the future', 'danger')
       }
 
       return result
@@ -173,7 +173,7 @@ export default {
       })
 
       if (!result) {
-        this.notification.showMessage('A location passed was not in the Megabus UK station list', 'danger')
+        this.notificationService.showMessage('A location passed was not in the Megabus UK station list', 'danger')
       }
 
       return result

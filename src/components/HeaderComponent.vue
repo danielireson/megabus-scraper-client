@@ -31,19 +31,19 @@
     </div>
   </section>
 
-  <div v-show="notification.state.visible" class="notification is-{{ notification.state.type }}">
-    <button @click="notification.hideMessage()" class="delete"></button>
-    {{ notification.state.text }}
+  <div v-show="notificationService.state.visible" class="notification is-{{ notificationService.state.type }}">
+    <button @click="notificationService.hideMessage()" class="delete"></button>
+    {{ notificationService.state.text }}
   </div>
 </template>
 
 <script>
-import NotificationStore from '../NotificationStore.js'
+import NotificationService from '../services/NotificationService.js'
 
 export default {
   data () {
     return {
-      notification: NotificationStore
+      notificationService: NotificationService
     }
   }
 }
