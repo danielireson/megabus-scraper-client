@@ -57,18 +57,17 @@
 </template>
 
 <script>
-import LocationsJson from '../locations.json'
 import FooterComponent from '../components/FooterComponent'
 import HeaderComponent from '../components/HeaderComponent'
-import NotificationService from '../services/NotificationService.js'
+import DateService from '../services/DateService.js'
+import LocationService from '../services/LocationService.js'
+import ValidationService from '../services/ValidationService.js'
 
 import {BASE_MEGABUS_URL} from '../config'
 
 export default {
   data () {
     return {
-      locations: LocationsJson,
-      notificationService: NotificationService,
       days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       searchParams: {
         originLocation: this.$route.params.originLocation,
@@ -86,10 +85,10 @@ export default {
   },
   computed: {
     originCode () {
-      return this.lookupCodeFromLocation(this.searchParams.originLocation)
+      return LocationService.lookupCodeFromLocation(this.searchParams.originLocation)
     },
     destinationCode () {
-      return this.lookupCodeFromLocation(this.searchParams.destinationLocation)
+      return LocationService.lookupCodeFromLocation(this.searchParams.destinationLocation)
     },
     resultsChunked () {
       // Chunk long array into week arrays
@@ -98,7 +97,7 @@ export default {
     }
   },
   ready () {
-    this.validateFields()
+    ValidationService.validate(this.searchParams)
     this.makeResultsStructureArray()
     this.getResults()
   },
@@ -107,90 +106,10 @@ export default {
     FooterComponent
   },
   methods: {
-    validateFields () {
-      if (
-        !this.isEndDateAfterStartDate() ||
-        !this.isValidLocation(this.searchParams.originLocation) ||
-        !this.isValidLocation(this.searchParams.destinationLocation) ||
-        !this.isValidDate(this.searchParams.startDate) ||
-        !this.isValidDate(this.searchParams.endDate)) {
-        this.$route.router.go('/')
-      }
-    },
-    newDateObject (string) {
-      let components = string.split('-')
-      let day = components[0]
-      let month = components[1]
-      let year = components[2]
-      return new Date(year, month - 1, day)
-    },
-    isEndDateAfterStartDate () {
-      let result = false
-
-      if (this.newDateObject(this.searchParams.startDate) < this.newDateObject(this.searchParams.endDate)) {
-        result = true
-      }
-
-      if (!result) {
-        this.notificationService.showMessage('Search start date is after the end date', 'danger')
-      }
-
-      return result
-    },
-    isValidDate (string) {
-      let result = false
-      let todaysYear = new Date().getFullYear()
-      let comp = string.split('-')
-      let day = comp[0]
-      let month = comp[1]
-      let year = comp[2]
-
-      if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= todaysYear && year <= todaysYear + 1) {
-        let date = new Date(comp[2], comp[1] - 1, comp[0])
-        if (date) {
-          result = true
-        }
-      }
-
-      if (!result) {
-        this.notificationService.showMessage('Dates should formatted as DD/MM/YYYY and be in the future', 'danger')
-      }
-
-      return result
-    },
-    getLengthBetweenDates () {
-      let oneDay = 24 * 60 * 60 * 1000
-      let numberOfDays = Math.abs(this.newDateObject(this.$route.params.startDate).getTime() - this.newDateObject(this.$route.params.endDate).getTime()) / oneDay
-      numberOfDays = Math.round(numberOfDays)
-      return numberOfDays
-    },
-    isValidLocation (string) {
-      let result = false
-      this.locations.forEach((location) => {
-        if (location.name.toLowerCase() === string) {
-          result = true
-        }
-      })
-
-      if (!result) {
-        this.notificationService.showMessage('A location passed was not in the Megabus UK station list', 'danger')
-      }
-
-      return result
-    },
-    lookupCodeFromLocation (string) {
-      let result = false
-      this.locations.forEach((location) => {
-        if (location.name.toLowerCase() === string) {
-          result = location.code
-        }
-      })
-      return result
-    },
     makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
       let daysArray = []
-      for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
+      for (let day = 0; day <= DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate); day++) {
         daysArray.push(day)
       }
 
@@ -221,8 +140,8 @@ export default {
     },
     getResults () {
       this.resultsLong = []
-      for (let day = 0; day <= this.getLengthBetweenDates(); day++) {
-        let activeDayObject = this.newDateObject(this.searchParams.startDate)
+      for (let day = 0; day <= DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate); day++) {
+        let activeDayObject = DateService.getDateObjectFromString(this.searchParams.startDate)
         activeDayObject.setDate(activeDayObject.getDate() + day)
         let activeDateString = activeDayObject.getDate() + '-' + (activeDayObject.getMonth() + 1) + '-' + activeDayObject.getFullYear()
         this.callScraperApi(activeDateString).then((response) => {

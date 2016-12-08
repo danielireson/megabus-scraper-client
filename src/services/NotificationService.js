@@ -5,7 +5,7 @@ var NotificationService = {
     type: '',
     timer: null
   },
-  showMessage: function (text, type = 'info') {
+  showMessage (text, type = 'info') {
     this.state.text = text
     this.state.type = type
     this.state.visible = true
@@ -13,9 +13,9 @@ var NotificationService = {
     let that = this
     this.state.timer = setTimeout(function () {
       that.state.visible = false
-    }, 7000)
+    }, 5000)
   },
-  hideMessage: function () {
+  hideMessage () {
     this.state.visible = false
     this.state.text = ''
   }
