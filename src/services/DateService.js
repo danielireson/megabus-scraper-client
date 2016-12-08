@@ -30,7 +30,7 @@ var DateService = {
     }
 
     if (!result) {
-      NotificationService.showMessage('Dates should formatted as DD/MM/YYYY and be within one year', 'danger')
+      NotificationService.showMessage('Dates should formatted as DD-MM-YYYY and be within one year', 'danger')
     }
 
     return result
