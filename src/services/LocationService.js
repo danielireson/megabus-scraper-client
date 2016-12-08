@@ -23,7 +23,7 @@ var LocationService = {
     })
 
     if (!result) {
-      NotificationService.showMessage('You\'ve passed an invalid location', 'danger')
+      NotificationService.showMessage('Invalid location selected', 'danger')
     }
 
     return result
