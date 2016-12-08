@@ -97,7 +97,10 @@ export default {
     }
   },
   ready () {
-    ValidationService.validate(this.searchParams)
+    if (!ValidationService.validate(this.searchParams)) {
+      this.$router.go('/home')
+    }
+
     this.makeResultsStructureArray()
     this.getResults()
   },
