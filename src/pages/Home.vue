@@ -56,7 +56,7 @@
             </div>
           </div>
           <p class="control">
-            <a href v-link="{name: 'search', params: searchParams}" class="button is-fullwidth is-primary is-outlined">
+            <a href @click.prevent="navigateToSearch" class="button is-fullwidth is-primary is-outlined">
               Search for prices
             </a>
           </p>
@@ -73,6 +73,7 @@ import LocationsJson from '../locations.json'
 import Datepicker from 'vue-bulma-datepicker'
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
+import ValidationService from '../services/ValidationService'
 
 export default {
   data () {
@@ -90,6 +91,13 @@ export default {
     HeaderComponent,
     FooterComponent,
     Datepicker
+  },
+  methods: {
+    navigateToSearch () {
+      if (ValidationService.validate(this.searchParams)) {
+        this.$router.go({name: 'search', params: this.searchParams})
+      }
+    }
   }
 }
 </script>
