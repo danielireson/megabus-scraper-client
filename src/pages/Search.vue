@@ -76,6 +76,9 @@ export default {
         startDate: this.$route.params.startDate,
         endDate: this.$route.params.endDate
       },
+      originCode: LocationService.lookupCodeFromLocation(this.$route.params.originLocation),
+      destinationCode: LocationService.lookupCodeFromLocation(this.$route.params.destinationLocation),
+      lengthBetweenDates: DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate),
       resultsStructure: [], // Empty array for weeks and day structure
       resultsLong: {}, // Object of day results
       resultsChunked: [], // Responses split up into weeks
@@ -83,17 +86,6 @@ export default {
       highestPrice: 0, // Same as above in reverse
       firstThirdPriceBound: 0,
       secondThirdPriceBound: 0
-    }
-  },
-  computed: {
-    lengthBetweenDates () {
-      return DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate)
-    },
-    originCode () {
-      return LocationService.lookupCodeFromLocation(this.searchParams.originLocation)
-    },
-    destinationCode () {
-      return LocationService.lookupCodeFromLocation(this.searchParams.destinationLocation)
     }
   },
   ready () {
