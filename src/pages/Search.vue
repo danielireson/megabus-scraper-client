@@ -7,7 +7,7 @@
         <h1 class="title">
           {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
         </h1>
-        <h2 class="subtitle">{{ searchParams.startDate }} - {{ searchParams.endDate }}</h2>
+        <h2 class="subtitle">{{ searchParams.startDate }} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{ searchParams.endDate }}</h2>
       </div>
     </div>
   </section>
