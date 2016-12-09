@@ -42,6 +42,14 @@ var DateService = {
       NotificationService.showMessage('Search start date is after the end date', 'danger')
       return false
     }
+  },
+  isMaxOneMonthInLength (startDate, endDate) {
+    if (this.getLengthBetweenDates(startDate, endDate) > 31) {
+      NotificationService.showMessage('You can only search across a maximum of 31 days', 'danger')
+      return false
+    } else {
+      return true
+    }
   }
 }
 
