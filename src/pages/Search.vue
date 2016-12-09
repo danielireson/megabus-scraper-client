@@ -77,8 +77,8 @@ export default {
         endDate: this.$route.params.endDate
       },
       resultsStructure: [], // Empty array for weeks and day structure
-      resultsLongTemp: {}, // Object of day results
       resultsLong: {}, // Object of day results
+      resultsChunked: [], // Responses split up into weeks
       lowestPrice: 900, // High no so the first comparison will set the initial value
       highestPrice: 0, // Same as above in reverse
       firstThirdPriceBound: 0,
@@ -94,11 +94,6 @@ export default {
     },
     destinationCode () {
       return LocationService.lookupCodeFromLocation(this.searchParams.destinationLocation)
-    },
-    resultsChunked () {
-      // Chunk long array into week arrays
-      // Using computed property because data is returned in promises
-      return this.chunkObjectToWeeks(this.resultsLong)
     }
   },
   ready () {
@@ -186,10 +181,11 @@ export default {
             this.setPriceBounds()
           }
 
-          this.resultsLongTemp[day] = activeDayResult
+          this.resultsLong[day] = activeDayResult
 
-          if (Object.keys(this.resultsLongTemp).length === this.lengthBetweenDates + 1) {
-            this.resultsLong = this.resultsLongTemp
+          // Split into weeks if all responses have been received
+          if (Object.keys(this.resultsLong).length === this.lengthBetweenDates + 1) {
+            this.resultsChunked = this.chunkObjectToWeeks(this.resultsLong)
           }
         }, () => {
           NotificationService.showMessage('There was an error scraping results', 'danger')
