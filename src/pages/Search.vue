@@ -61,6 +61,7 @@ import FooterComponent from '../components/FooterComponent'
 import HeaderComponent from '../components/HeaderComponent'
 import DateService from '../services/DateService.js'
 import LocationService from '../services/LocationService.js'
+import NotificationService from '../services/NotificationService.js'
 import ValidationService from '../services/ValidationService.js'
 
 import {BASE_MEGABUS_URL} from '../config'
@@ -167,6 +168,9 @@ export default {
           }
 
           this.resultsLong.push(activeDayResult)
+        }, () => {
+          NotificationService.showMessage('There was an error scraping results', 'danger')
+          this.$router.go('/home')
         })
       }
     },
