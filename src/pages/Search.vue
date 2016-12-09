@@ -77,14 +77,18 @@ export default {
         endDate: this.$route.params.endDate
       },
       resultsStructure: [], // Empty array for weeks and day structure
-      resultsLong: [], // Array of day results
-      lowestPrice: 999, // High no so the first comparison will set the initial value
+      resultsLongTemp: {}, // Object of day results
+      resultsLong: {}, // Object of day results
+      lowestPrice: 900, // High no so the first comparison will set the initial value
       highestPrice: 0, // Same as above in reverse
       firstThirdPriceBound: 0,
       secondThirdPriceBound: 0
     }
   },
   computed: {
+    lengthBetweenDates () {
+      return DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate)
+    },
     originCode () {
       return LocationService.lookupCodeFromLocation(this.searchParams.originLocation)
     },
@@ -94,7 +98,7 @@ export default {
     resultsChunked () {
       // Chunk long array into week arrays
       // Using computed property because data is returned in promises
-      return this.chunkArrayToWeeks(this.resultsLong)
+      return this.chunkObjectToWeeks(this.resultsLong)
     }
   },
   ready () {
@@ -113,7 +117,7 @@ export default {
     makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
       let daysArray = []
-      for (let day = 0; day <= DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate); day++) {
+      for (let day = 0; day <= this.lengthBetweenDates; day++) {
         daysArray.push(day)
       }
 
@@ -135,6 +139,22 @@ export default {
 
       return resultsChunked
     },
+    chunkObjectToWeeks (object) {
+      let resultsChunked = []
+      for (let i = 0; i < Object.keys(object).length; i += 7) {
+        let temp = {}
+        let x = 0
+        for (let k in object) {
+          if (x >= i && x < i + 7) {
+            temp[k] = object[k]
+          }
+          x++
+        }
+        resultsChunked.push(temp)
+      }
+
+      return resultsChunked
+    },
     callScraperApi (date) {
       let url = 'search/'
       url += this.originCode + '/'
@@ -143,8 +163,7 @@ export default {
       return this.$http.get(url)
     },
     getResults () {
-      this.resultsLong = []
-      for (let day = 0; day <= DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate); day++) {
+      for (let day = 0; day <= this.lengthBetweenDates; day++) {
         let activeDayObject = DateService.getDateObjectFromString(this.searchParams.startDate)
         activeDayObject.setDate(activeDayObject.getDate() + day)
         let activeDateString = activeDayObject.getDate() + '-' + (activeDayObject.getMonth() + 1) + '-' + activeDayObject.getFullYear()
@@ -167,7 +186,11 @@ export default {
             this.setPriceBounds()
           }
 
-          this.resultsLong.push(activeDayResult)
+          this.resultsLongTemp[day] = activeDayResult
+
+          if (Object.keys(this.resultsLongTemp).length === this.lengthBetweenDates + 1) {
+            this.resultsLong = this.resultsLongTemp
+          }
         }, () => {
           NotificationService.showMessage('There was an error scraping results', 'danger')
           this.$router.go('/home')
