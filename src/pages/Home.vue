@@ -69,16 +69,16 @@
 </template>
 
 <script>
-import LocationsJson from '../locations.json'
 import Datepicker from 'vue-bulma-datepicker'
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
 import ValidationService from '../services/ValidationService'
+import LocationService from '../services/LocationService'
 
 export default {
   data () {
     return {
-      locations: LocationsJson,
+      locations: LocationService.getLocations(),
       searchParams: {
         originLocation: '',
         destinationLocation: '',
