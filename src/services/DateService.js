@@ -1,4 +1,4 @@
-import NotificationService from './NotificationService.js'
+import NotificationService from './NotificationService'
 
 var DateService = {
   getLengthBetweenDates (startDate, endDate) {

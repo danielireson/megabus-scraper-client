@@ -1,5 +1,5 @@
 import LocationsJson from '../locations.json'
-import NotificationService from './NotificationService.js'
+import NotificationService from './NotificationService'
 
 var LocationService = {
   getLocations () {

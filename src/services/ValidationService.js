@@ -1,5 +1,5 @@
-import DateService from './DateService.js'
-import LocationService from './LocationService.js'
+import DateService from './DateService'
+import LocationService from './LocationService'
 
 var ValidationService = {
   validate (searchParams) {

@@ -57,14 +57,15 @@
 </template>
 
 <script>
-import FooterComponent from '../components/FooterComponent'
-import HeaderComponent from '../components/HeaderComponent'
-import DateService from '../services/DateService.js'
-import LocationService from '../services/LocationService.js'
-import NotificationService from '../services/NotificationService.js'
-import ValidationService from '../services/ValidationService.js'
+import DateService from '../services/DateService'
+import LocationService from '../services/LocationService'
+import NotificationService from '../services/NotificationService'
+import ValidationService from '../services/ValidationService'
 
-import {BASE_MEGABUS_URL} from '../config'
+import {BASE_MEGABUS_URL} from '../config/vars'
+
+import HeaderComponent from '../components/HeaderComponent'
+import FooterComponent from '../components/FooterComponent'
 
 export default {
   data () {

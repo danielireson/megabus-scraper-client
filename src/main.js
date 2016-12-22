@@ -1,29 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueValidator from 'vue-validator'
-import VueResource from 'vue-resource'
+
+import './config/filters'
+import './config/http'
 
 import Home from './pages/Home'
 import Search from './pages/Search'
 
-import {API_DOMAIN, API_ROOT, API_KEY} from './config'
-
 Vue.use(VueRouter)
 Vue.use(VueValidator)
-Vue.use(VueResource)
 
-// Custom filters
-Vue.filter('titleCase', function (value) {
-  return value.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-  })
-})
-
-// API server config
-Vue.http.options.root = API_DOMAIN + API_ROOT
-Vue.http.headers.common['X-Authorization'] = API_KEY
-
-// Page routes
 var router = new VueRouter({
   hashbang: false
 })

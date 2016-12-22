@@ -70,10 +70,12 @@
 
 <script>
 import Datepicker from 'vue-bulma-datepicker'
-import HeaderComponent from '../components/HeaderComponent'
-import FooterComponent from '../components/FooterComponent'
+
 import ValidationService from '../services/ValidationService'
 import LocationService from '../services/LocationService'
+
+import HeaderComponent from '../components/HeaderComponent'
+import FooterComponent from '../components/FooterComponent'
 
 export default {
   data () {
