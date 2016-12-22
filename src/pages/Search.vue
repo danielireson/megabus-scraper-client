@@ -85,8 +85,8 @@ export default {
       resultsChunked: [], // Responses split up into weeks
       lowestPrice: 900, // High no so the first comparison will set the initial value
       highestPrice: 0, // Same as above in reverse
-      firstThirdPriceBound: 0,
-      secondThirdPriceBound: 0
+      firstThirdPriceBound: 0, // Prices less than = Green label
+      secondThirdPriceBound: 0 // Prices greater than = Red label
     }
   },
   ready () {
