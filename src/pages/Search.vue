@@ -13,13 +13,6 @@
   </section>
 
   <section class="search-results">
-    <div class="container has-text-centered is-hidden-mobile is-hidden-tablet-only">
-      <div class="columns">
-        <div v-for="day in days" class="column">
-          {{ day }}
-        </div>
-      </div>
-    </div>
     <div class="container">
       <!-- Rows for each week -->
       <div v-for="week in resultsStructure" class="columns has-text-centered is-block-tablet is-flex-desktop">
@@ -81,7 +74,7 @@ export default {
       destinationCode: LocationService.lookupCodeFromLocation(this.$route.params.destinationLocation),
       lengthBetweenDates: DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate),
       resultsStructure: [], // Empty array for weeks and day structure
-      resultsLong: {}, // Object of day results
+      resultsLong: [], // Array for all api responses
       resultsChunked: [], // Responses split up into weeks
       lowestPrice: 900, // High no so the first comparison will set the initial value
       highestPrice: 0, // Same as above in reverse
@@ -127,22 +120,6 @@ export default {
 
       return resultsChunked
     },
-    chunkObjectToWeeks (object) {
-      let resultsChunked = []
-      for (let i = 0; i < Object.keys(object).length; i += 7) {
-        let temp = {}
-        let x = 0
-        for (let k in object) {
-          if (x >= i && x < i + 7) {
-            temp[k] = object[k]
-          }
-          x++
-        }
-        resultsChunked.push(temp)
-      }
-
-      return resultsChunked
-    },
     callScraperApi (date) {
       let url = 'search/'
       url += this.originCode + '/'
@@ -177,8 +154,8 @@ export default {
           this.resultsLong[day] = activeDayResult
 
           // Split into weeks if all responses have been received
-          if (Object.keys(this.resultsLong).length === this.lengthBetweenDates + 1) {
-            this.resultsChunked = this.chunkObjectToWeeks(this.resultsLong)
+          if (this.resultsLong.length === this.lengthBetweenDates + 1) {
+            this.resultsChunked = this.chunkArrayToWeeks(this.resultsLong)
           }
         }, () => {
           NotificationService.showMessage('There was an error scraping results', 'danger')
