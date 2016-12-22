@@ -15,23 +15,25 @@
   <section class="search-results">
     <div class="container">
       <!-- Rows for each week -->
-      <div v-for="week in resultsStructure" class="columns has-text-centered is-block-tablet is-flex-desktop">
+      <div v-for="(weekIndex, week) in results" class="columns has-text-centered is-block-tablet is-flex-desktop">
         <!-- Columns for each day of the week -->
-        <div v-for="day in week" class="column">
+        <div v-for="(dayIndex, day) in week" class="column">
           <div class="box">
-            <a v-show="!resultsChunked[resultsStructure.indexOf(week)]" class="button is-loading box-loading"></a>
-            <h3 class="search-results-date">{{ resultsChunked[resultsStructure.indexOf(week)][day].date }}</h3>
-            <div v-show="resultsChunked[resultsStructure.indexOf(week)][day].results" v-for="result in resultsChunked[resultsStructure.indexOf(week)][day].results" class="search-result">
-              <div class="columns is-gapless">
-                <div class="column">  
-                  <span class="search-result-time">{{ result.time }}</span>
-                </div>
-                <div class="column">                
-                  <a @click.prevent="goToMegabusWebsiteResult(resultsChunked[resultsStructure.indexOf(week)][day].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= firstThirdPriceBound, 'price-medium': result.price > firstThirdPriceBound && result.price <= secondThirdPriceBound, 'price-high': result.price > secondThirdPriceBound}">£{{ result.price }}</a>
+            <a v-show="loading" class="button is-loading box-loading"></a>
+            <div v-if="!loading">
+              <h3 class="search-results-date">{{ results[weekIndex][dayIndex].date }}</h3>
+              <div v-for="result in results[weekIndex][dayIndex].results" class="search-result">
+                <div class="columns is-gapless">
+                  <div class="column">  
+                    <span class="search-result-time">{{ result.time }}</span>
+                  </div>
+                  <div class="column">                
+                    <a @click.prevent="goToMegabusWebsiteResult(results[weekIndex][dayIndex].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= firstThirdPriceBound, 'price-medium': result.price > firstThirdPriceBound && result.price <= secondThirdPriceBound, 'price-high': result.price > secondThirdPriceBound}">£{{ result.price }}</a>
+                  </div>
                 </div>
               </div>
             </div>
-            <div v-show="resultsChunked[resultsStructure.indexOf(week)][day].results.length === 0">
+            <div v-show="loading === false && results[weekIndex][dayIndex].results.length === 0">
               No results
             </div>
           </div>
@@ -70,12 +72,11 @@ export default {
         startDate: this.$route.params.startDate,
         endDate: this.$route.params.endDate
       },
+      loading: true,
       originCode: LocationService.lookupCodeFromLocation(this.$route.params.originLocation),
       destinationCode: LocationService.lookupCodeFromLocation(this.$route.params.destinationLocation),
       lengthBetweenDates: DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate),
-      resultsStructure: [], // Empty array for weeks and day structure
-      resultsLong: [], // Array for all api responses
-      resultsChunked: [], // Responses split up into weeks
+      results: [], // Empty array for weeks and day structure
       lowestPrice: 900, // High no so the first comparison will set the initial value
       highestPrice: 0, // Same as above in reverse
       firstThirdPriceBound: 0, // Prices less than = Green label
@@ -109,7 +110,7 @@ export default {
           chunkedWeeks[week][day] = day
         }
       }
-      this.resultsStructure = chunkedWeeks
+      this.results = chunkedWeeks
     },
     chunkArrayToWeeks (array) {
       let resultsChunked = []
@@ -128,6 +129,8 @@ export default {
       return this.$http.get(url)
     },
     getResults () {
+      let resultsLong = []
+      this.loading = true
       for (let day = 0; day <= this.lengthBetweenDates; day++) {
         let activeDayObject = DateService.getDateObjectFromString(this.searchParams.startDate)
         activeDayObject.setDate(activeDayObject.getDate() + day)
@@ -151,11 +154,15 @@ export default {
             this.setPriceBounds()
           }
 
-          this.resultsLong[day] = activeDayResult
+          resultsLong[day] = activeDayResult
 
           // Split into weeks if all responses have been received
-          if (this.resultsLong.length === this.lengthBetweenDates + 1) {
-            this.resultsChunked = this.chunkArrayToWeeks(this.resultsLong)
+          if (resultsLong.length === this.lengthBetweenDates + 1) {
+            // Force dom to be ready when showing results
+            setTimeout(() => {
+              this.results = this.chunkArrayToWeeks(resultsLong)
+              this.loading = false
+            }, 0)
           }
         }, () => {
           NotificationService.showMessage('There was an error scraping results', 'danger')
