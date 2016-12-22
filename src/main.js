@@ -4,7 +4,6 @@ import VueValidator from 'vue-validator'
 import VueResource from 'vue-resource'
 
 import Home from './pages/Home'
-import About from './pages/About'
 import Search from './pages/Search'
 
 import {API_DOMAIN, API_ROOT, API_KEY} from './config'
@@ -32,9 +31,6 @@ var router = new VueRouter({
 router.map({
   '/': {
     component: Home
-  },
-  '/about': {
-    component: About
   },
   '/search/:originLocation/:destinationLocation/:startDate/:endDate': {
     name: 'search',
