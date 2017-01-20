@@ -1,15 +1,6 @@
 <template>
   <header-component></header-component>
-
-  <section class="hero is-info is-medium">
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          The quickest way to search Megabus UK prices
-        </h1>
-      </div>
-    </div>
-  </section>
+  <hero>The quickest way to search Megabus UK prices</hero>
 
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
@@ -61,6 +52,7 @@ import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
 import SelectDate from '../components/SelectDate'
 import SelectLocation from '../components/SelectLocation'
+import Hero from '../components/Hero'
 
 export default {
   data () {
@@ -77,7 +69,8 @@ export default {
     HeaderComponent,
     FooterComponent,
     SelectDate,
-    SelectLocation
+    SelectLocation,
+    Hero
   },
   methods: {
     goToSearchResultsPage () {
