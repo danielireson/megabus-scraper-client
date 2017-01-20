@@ -4,7 +4,7 @@
     :loading="loading" 
     :results="results"
     :prices="prices"
-    :go-to-megabus-result="goToMegabusWebsiteResult">
+    :go-to-megabus-result="goToMegabusResult">
   </search>
 </template>
 
