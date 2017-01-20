@@ -50,7 +50,6 @@ import Hero from '../components/Hero'
 export default {
   data () {
     return {
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       searchParams: {
         originLocation: this.$route.params.originLocation,
         destinationLocation: this.$route.params.destinationLocation,
