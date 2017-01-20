@@ -48,7 +48,7 @@
             </div>
           </div>
           <p class="control">
-            <a href @click.prevent="navigateToSearch" class="button is-fullwidth is-primary is-outlined">
+            <a href @click.prevent="goToSearchResultsPage" class="button is-fullwidth is-primary is-outlined">
               Search for prices
             </a>
           </p>
@@ -86,7 +86,7 @@ export default {
     SelectDate
   },
   methods: {
-    navigateToSearch () {
+    goToSearchResultsPage () {
       if (ValidationService.validate(this.searchParams)) {
         this.$router.go({name: 'search', params: this.searchParams})
       }
