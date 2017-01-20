@@ -1,16 +1,6 @@
 <template>
   <header-component></header-component>
-
-  <section class="hero is-info is-small">
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
-        </h1>
-        <h2 class="subtitle">{{ searchParams.startDate }} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{ searchParams.endDate }}</h2>
-      </div>
-    </div>
-  </section>
+  <hero :search-params="searchParams"></hero>
 
   <section class="search-results">
     <div class="container">
@@ -61,6 +51,7 @@ import {BASE_MEGABUS_URL} from '../config/vars'
 
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
+import Hero from '../components/Hero'
 
 export default {
   data () {
@@ -93,7 +84,8 @@ export default {
   },
   components: {
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    Hero
   },
   methods: {
     makeResultsStructureArray () {
