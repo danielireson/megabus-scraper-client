@@ -28,11 +28,7 @@
               </p> 
               <label class="label">Start date for search</label>
               <div id="startDate">
-                <datepicker 
-                  placeholder="Select date" 
-                  :config="{ dateFormat: 'd-m-Y' }"
-                  :value.sync="searchParams.startDate">
-                </datepicker>
+                <select-date :date.sync="searchParams.startDate"></select-date>
               </div>             
             </div>
             <div class="column is-half">
@@ -47,11 +43,7 @@
               </p> 
               <label class="label">End date for search</label>
               <div id="endDate">
-                <datepicker 
-                  placeholder="Select date" 
-                  :config="{ dateFormat: 'd-m-Y' }"
-                  :value.sync="searchParams.endDate">
-                </datepicker>
+                <select-date :date.sync="searchParams.endDate"></select-date>
               </div>          
             </div>
           </div>
@@ -69,13 +61,12 @@
 </template>
 
 <script>
-import Datepicker from 'vue-bulma-datepicker'
-
 import ValidationService from '../services/ValidationService'
 import LocationService from '../services/LocationService'
 
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
+import SelectDate from '../components/SelectDate'
 
 export default {
   data () {
@@ -92,7 +83,7 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
-    Datepicker
+    SelectDate
   },
   methods: {
     navigateToSearch () {
@@ -103,9 +94,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .cur_year {
-    display: none !important;
-  }
-</style>
