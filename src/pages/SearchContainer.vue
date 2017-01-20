@@ -55,11 +55,8 @@ export default {
     goToMegabusResult (date) {
       let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
       url += '&destinationCode=' + this.destinationCode
-      url += '&outboundDepartureDate=' + this._replaceAll(date, '-', '%2f')
+      url += '&outboundDepartureDate=' + date.split('-').join('%2f')
       window.open(url)
-    },
-    _replaceAll (string, target, replacement) {
-      return string.split(target).join(replacement)
     },
     _makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
