@@ -20,10 +20,7 @@
               <label class="label">Origin</label>
               <p class="control">
                 <span class="select is-fullwidth">
-                  <select v-model="searchParams.originLocation">
-                    <option value="" disabled selected>Select location</option>
-                    <option v-for="location in locations" :value="location.name.toLowerCase()">{{ location.name }}</option>
-                  </select>
+                  <select-location :location.sync="searchParams.originLocation"></select-location>
                 </span>
               </p> 
               <label class="label">Start date for search</label>
@@ -35,10 +32,7 @@
               <label class="label">Destination</label>
               <p class="control">
                 <span class="select is-fullwidth">
-                  <select v-model="searchParams.destinationLocation">
-                    <option value="" disabled selected>Select location</option>
-                    <option v-for="location in locations" :value="location.name.toLowerCase()">{{ location.name }}</option>
-                  </select>
+                  <select-location :location.sync="searchParams.destinationLocation"></select-location>
                 </span>
               </p> 
               <label class="label">End date for search</label>
@@ -62,16 +56,15 @@
 
 <script>
 import ValidationService from '../services/ValidationService'
-import LocationService from '../services/LocationService'
 
 import HeaderComponent from '../components/HeaderComponent'
 import FooterComponent from '../components/FooterComponent'
 import SelectDate from '../components/SelectDate'
+import SelectLocation from '../components/SelectLocation'
 
 export default {
   data () {
     return {
-      locations: LocationService.getLocations(),
       searchParams: {
         originLocation: '',
         destinationLocation: '',
@@ -83,7 +76,8 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
-    SelectDate
+    SelectDate,
+    SelectLocation
   },
   methods: {
     goToSearchResultsPage () {
