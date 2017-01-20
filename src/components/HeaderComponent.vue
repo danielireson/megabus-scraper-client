@@ -14,7 +14,7 @@
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
-                <span>Client</span>
+                <span>Web Client</span>
               </a>
             </span>
             <span class="nav-item">
@@ -22,7 +22,7 @@
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
-                <span>Scraper</span>
+                <span>Scraper API</span>
               </a>
             </span>
           </div>
