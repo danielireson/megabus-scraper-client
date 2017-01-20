@@ -2,14 +2,15 @@
   <search
     :search-params="searchParams"
     :loading="loading" 
-    :origin-code="originCode" 
-    :destination-code="destinationCode" 
     :results="results"
-    :prices="prices">
+    :prices="prices"
+    :go-to-megabus-result="goToMegabusWebsiteResult">
   </search>
 </template>
 
 <script>
+import {BASE_MEGABUS_URL} from '../config/vars'
+
 import DateService from '../services/DateService'
 import LocationService from '../services/LocationService'
 import NotificationService from '../services/NotificationService'
@@ -51,6 +52,15 @@ export default {
     Search
   },
   methods: {
+    goToMegabusResult (date) {
+      let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
+      url += '&destinationCode=' + this.destinationCode
+      url += '&outboundDepartureDate=' + this.replaceAll(date, '-', '%2f')
+      window.open(url)
+    },
+    replaceAll (string, target, replacement) {
+      return string.split(target).join(replacement)
+    },
     makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
       let daysArray = []

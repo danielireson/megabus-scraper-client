@@ -2,11 +2,10 @@
   <header-component></header-component>
   <hero :search-params="searchParams"></hero>
   <search-results
-    :loading="loading" 
-    :origin-code="originCode" 
-    :destination-code="destinationCode" 
+    :loading="loading"
     :results="results"
-    :prices="prices">
+    :prices="prices"
+    :go-to-megabus-result="goToMegabusResult">
   </search-results>
   <footer-component></footer-component>
 </template>
@@ -18,7 +17,7 @@ import Hero from '../components/Hero'
 import SearchResults from '../components/SearchResults'
 
 export default {
-  props: ['searchParams', 'loading', 'originCode', 'destinationCode', 'results', 'prices'],
+  props: ['searchParams', 'loading', 'results', 'prices', 'goToMegabusResult'],
   components: {
     HeaderComponent,
     FooterComponent,

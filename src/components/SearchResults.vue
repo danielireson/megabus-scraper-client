@@ -14,8 +14,8 @@
                   <div class="column">  
                     <span class="search-result-time">{{ result.time }}</span>
                   </div>
-                  <div class="column">                
-                    <a @click.prevent="goToMegabusWebsiteResult(results[weekIndex][dayIndex].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= prices.firstThirdPriceBound, 'price-medium': result.price > prices.firstThirdPriceBound && result.price <= prices.secondThirdPriceBound, 'price-high': result.price > prices.secondThirdPriceBound}">£{{ result.price }}</a>
+                  <div class="column">
+                    <a @click.prevent="goToMegabusResult(results[weekIndex][dayIndex].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= prices.firstThirdPriceBound, 'price-medium': result.price > prices.firstThirdPriceBound && result.price <= prices.secondThirdPriceBound, 'price-high': result.price > prices.secondThirdPriceBound}">£{{ result.price }}</a>
                   </div>
                 </div>
               </div>
@@ -37,21 +37,8 @@
 </template>
 
 <script>
-import {BASE_MEGABUS_URL} from '../config/vars'
-
 export default {
-  props: ['loading', 'originCode', 'destinationCode', 'results', 'prices'],
-  methods: {
-    goToMegabusWebsiteResult (date) {
-      let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
-      url += '&destinationCode=' + this.destinationCode
-      url += '&outboundDepartureDate=' + this.replaceAll(date, '-', '%2f')
-      window.open(url)
-    },
-    replaceAll (string, target, replacement) {
-      return string.split(target).join(replacement)
-    }
-  }
+  props: ['loading', 'results', 'prices', 'goToMegabusResult']
 }
 </script>
 
