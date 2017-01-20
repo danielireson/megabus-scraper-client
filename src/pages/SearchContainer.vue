@@ -45,8 +45,8 @@ export default {
       this.$router.go('/home')
     }
 
-    this.makeResultsStructureArray()
-    this.getResults()
+    this._makeResultsStructureArray()
+    this._getResults()
   },
   components: {
     Search
@@ -55,13 +55,13 @@ export default {
     goToMegabusResult (date) {
       let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
       url += '&destinationCode=' + this.destinationCode
-      url += '&outboundDepartureDate=' + this.replaceAll(date, '-', '%2f')
+      url += '&outboundDepartureDate=' + this._replaceAll(date, '-', '%2f')
       window.open(url)
     },
-    replaceAll (string, target, replacement) {
+    _replaceAll (string, target, replacement) {
       return string.split(target).join(replacement)
     },
-    makeResultsStructureArray () {
+    _makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
       let daysArray = []
       for (let day = 0; day <= this.lengthBetweenDates; day++) {
@@ -69,7 +69,7 @@ export default {
       }
 
       // Chunks into weeks then resets the day values to its index in that week
-      let chunkedWeeks = this.chunkArrayToWeeks(daysArray)
+      let chunkedWeeks = this._chunkArrayToWeeks(daysArray)
       for (let week = 0; week < chunkedWeeks.length; week++) {
         for (let day = 0; day < chunkedWeeks[week].length; day++) {
           chunkedWeeks[week][day] = day
@@ -77,7 +77,7 @@ export default {
       }
       this.results = chunkedWeeks
     },
-    chunkArrayToWeeks (array) {
+    _chunkArrayToWeeks (array) {
       let resultsChunked = []
       for (let i = 0; i < array.length; i += 7) {
         let temp = array.slice(i, i + 7)
@@ -86,21 +86,21 @@ export default {
 
       return resultsChunked
     },
-    callScraperApi (date) {
+    _callScraperApi (date) {
       let url = 'search/'
       url += this.originCode + '/'
       url += this.destinationCode + '/'
       url += date
       return this.$http.get(url)
     },
-    getResults () {
+    _getResults () {
       let resultsLong = []
       this.loading = true
       for (let day = 0; day <= this.lengthBetweenDates; day++) {
         let activeDayObject = DateService.getDateObjectFromString(this.searchParams.startDate)
         activeDayObject.setDate(activeDayObject.getDate() + day)
         let activeDateString = activeDayObject.getDate() + '-' + (activeDayObject.getMonth() + 1) + '-' + activeDayObject.getFullYear()
-        this.callScraperApi(activeDateString).then((response) => {
+        this._callScraperApi(activeDateString).then((response) => {
           let activeDayResult = {
             date: activeDateString,
             results: []
@@ -115,8 +115,8 @@ export default {
             })
 
             // Sets highest/lowest prices
-            this.priceCheck(response.data.data[i]['price'])
-            this.setPriceBounds()
+            this._priceCheck(response.data.data[i]['price'])
+            this._setPriceBounds()
           }
 
           resultsLong[day] = activeDayResult
@@ -125,7 +125,7 @@ export default {
           if (resultsLong.length === this.lengthBetweenDates + 1) {
             // Force dom to be ready when showing results
             setTimeout(() => {
-              this.results = this.chunkArrayToWeeks(resultsLong)
+              this.results = this._chunkArrayToWeeks(resultsLong)
               this.loading = false
             }, 0)
           }
@@ -135,7 +135,7 @@ export default {
         })
       }
     },
-    priceCheck (price) {
+    _priceCheck (price) {
       price = parseFloat(price)
       if (price < this.prices.lowestPrice) {
         this.prices.lowestPrice = price
@@ -145,7 +145,7 @@ export default {
         this.prices.highestPrice = price
       }
     },
-    setPriceBounds () {
+    _setPriceBounds () {
       let range = this.prices.highestPrice - this.prices.lowestPrice
       let thirtyPercent = range / 3
       this.prices.firstThirdPriceBound = this.prices.lowestPrice + thirtyPercent
