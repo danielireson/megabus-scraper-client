@@ -10,9 +10,8 @@ var NotificationService = {
     this.state.type = type
     this.state.visible = true
     clearTimeout(this.state.timer)
-    let that = this
-    this.state.timer = setTimeout(function () {
-      that.state.visible = false
+    this.state.timer = setTimeout(() => {
+      this.state.visible = false
     }, 5000)
   },
   hideMessage () {
