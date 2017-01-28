@@ -18,11 +18,11 @@
               </a>
             </span>
             <span class="nav-item">
-              <a href="https://github.com/danielireson/megabus-scraper-server" class="button is-info is-inverted" target="_blank">
+              <a href="https://github.com/danielireson/megabus-scraper-nodejs" class="button is-info is-inverted" target="_blank">
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
-                <span>Scraper API</span>
+                <span>Node.js API</span>
               </a>
             </span>
           </div>
