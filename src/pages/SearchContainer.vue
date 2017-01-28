@@ -40,6 +40,9 @@ export default {
       }
     }
   },
+  components: {
+    Search
+  },
   ready () {
     if (!ValidationService.validate(this.searchParams)) {
       this.$router.go('/home')
@@ -47,9 +50,6 @@ export default {
 
     this._makeResultsStructureArray()
     this._getResults()
-  },
-  components: {
-    Search
   },
   methods: {
     goToMegabusResult (date) {
