@@ -2,25 +2,25 @@
   <section class="search-results">
     <div class="container">
       <!-- Rows for each week -->
-      <div v-for="(weekIndex, week) in results" class="columns has-text-centered is-block-tablet is-flex-desktop">
+      <div v-for="week in results" class="columns has-text-centered is-block-tablet is-flex-desktop">
         <!-- Columns for each day of the week -->
-        <div v-for="(dayIndex, day) in week" class="column">
+        <div v-for="day in week" class="column">
           <div class="box">
             <a v-show="loading" class="button is-loading box-loading"></a>
             <div v-if="!loading">
-              <h3 class="search-results-date">{{ results[weekIndex][dayIndex].date }}</h3>
-              <div v-for="result in results[weekIndex][dayIndex].journeys" class="search-result">
+              <h3 class="search-results-date">{{ day.date }}</h3>
+              <div v-for="journey in day.journeys" class="search-result">
                 <div class="columns is-gapless">
                   <div class="column">  
-                    <span class="search-result-time">{{ result.departure.time }}</span>
+                    <span class="search-result-time">{{ journey.departure.time }}</span>
                   </div>
                   <div class="column">
-                    <a @click.prevent="goToMegabusResult(results[weekIndex][dayIndex].date)" :class="getPriceClass(result.price)">£{{ result.price }}</a>
+                    <a @click.prevent="goToMegabusResult(day.date)" :class="getPriceClass(journey.price)">£{{ journey.price }}</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-show="loading === false && results[weekIndex][dayIndex].journeys.length === 0">
+            <div v-show="loading === false && day.journeys.length === 0">
               No results
             </div>
           </div>
