@@ -1,33 +1,32 @@
-import LocationsJson from '../locations.json'
+import Vue from 'vue'
+
 import NotificationService from './NotificationService'
 
 var LocationService = {
-  getLocations () {
-    return LocationsJson
+  state: {
+    locations: {}
   },
-  lookupCodeFromLocation (string) {
-    let result = false
-    LocationsJson.forEach((location) => {
-      if (location.name.toLowerCase() === string) {
-        result = location.code
-      }
-    })
-    return result
-  },
-  isValidLocation (string) {
-    let result = false
-    LocationService.getLocations().forEach((location) => {
-      if (location.name.toLowerCase() === string) {
-        result = true
-      }
-    })
-
-    if (!result) {
+  isValidLocation (location) {
+    if (!(location.toLowerCase() in this.state.locations)) {
       NotificationService.showMessage('Invalid location selected', 'danger')
+      return false
     }
-
-    return result
+    return true
+  },
+  toFriendlyFormat (location) {
+    let noDashes = location.replace(/-/g, ' ')
+    return noDashes.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    })
+  },
+  _getLocations () {
+    Vue.http.get('locations').then((response) => {
+      this.state.locations = response.data.data
+    }, () => {
+      NotificationService.showMessage('Error getting locations', 'danger')
+    })
   }
 }
 
+LocationService._getLocations()
 export default LocationService

@@ -1,7 +1,7 @@
 <template>
   <select v-model="location">
     <option value="" disabled selected>Select location</option>
-    <option v-for="location in locations" :value="location.name.toLowerCase()">{{ location.name }}</option>
+    <option v-for="location in locations" :value="location">{{ locationService.toFriendlyFormat(location) }}</option>
   </select>
 </template>
 
@@ -9,11 +9,16 @@
 import LocationService from '../services/LocationService'
 
 export default {
+  props: ['location'],
   data () {
     return {
-      locations: LocationService.getLocations()
+      locationService: LocationService
     }
   },
-  props: ['location']
+  computed: {
+    locations () {
+      return Object.keys(this.locationService.state.locations)
+    }
+  }
 }
 </script>
