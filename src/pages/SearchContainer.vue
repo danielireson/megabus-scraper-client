@@ -39,10 +39,13 @@ export default {
   components: {
     Search
   },
-  created () {
+  activate (done) {
     if (!ValidationService.isValid(this.searchParams)) {
       this.$router.go('/home')
     }
+    done()
+  },
+  created () {
     this._makeResultsStructureArray()
   },
   ready () {
