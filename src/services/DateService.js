@@ -1,55 +1,31 @@
+import moment from 'moment'
+
 import NotificationService from './NotificationService'
 
 var DateService = {
   getLengthBetweenDates (startDate, endDate) {
-    let oneDay = 24 * 60 * 60 * 1000
-    let numberOfDays = Math.abs(this.getDateObjectFromString(startDate).getTime() - this.getDateObjectFromString(endDate).getTime()) / oneDay
-    numberOfDays = Math.round(numberOfDays)
-    return numberOfDays
+    return moment(endDate, 'DD-MM-YYYY').diff(moment(startDate, 'DD-MM-YYYY'), 'days')
   },
-  getDateObjectFromString (string) {
-    let components = string.split('-')
-    let day = components[0]
-    let month = components[1]
-    let year = components[2]
-    return new Date(year, month - 1, day)
-  },
-  isValidDate (string) {
-    let result = false
-    let todaysYear = new Date().getFullYear()
-    let comp = string.split('-')
-    let day = comp[0]
-    let month = comp[1]
-    let year = comp[2]
-
-    if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= todaysYear && year <= todaysYear + 1) {
-      let date = new Date(comp[2], comp[1] - 1, comp[0])
-      if (date) {
-        result = true
-      }
+  isValidDate (date) {
+    if (!moment(date, 'DD-MM-YYYY').isValid()) {
+      NotificationService.showMessage('Dates should formatted as DD-MM-YYYY', 'danger')
+      return false
     }
-
-    if (!result) {
-      NotificationService.showMessage('Dates should formatted as DD-MM-YYYY and be within one year', 'danger')
-    }
-
-    return result
+    return true
   },
   isEndDateAfterStartDate (startDate, endDate) {
-    if (this.getDateObjectFromString(startDate) < this.getDateObjectFromString(endDate)) {
-      return true
-    } else {
+    if (moment(endDate, 'DD-MM-YYYY') < moment(startDate, 'DD-MM-YYYY')) {
       NotificationService.showMessage('Search start date is after the end date', 'danger')
       return false
     }
+    return true
   },
   isMaxOneMonthInLength (startDate, endDate) {
     if (this.getLengthBetweenDates(startDate, endDate) > 31) {
-      NotificationService.showMessage('You can only search across a maximum of 31 days', 'danger')
+      NotificationService.showMessage('Search dates must be within one month of each other', 'danger')
       return false
-    } else {
-      return true
     }
+    return true
   }
 }
 
