@@ -4,7 +4,7 @@
       <div class="container has-text-centered">
         <div v-if="searchParams">
           <h1 class="title">
-            {{ searchParams.originLocation | titleCase }} to {{ searchParams.destinationLocation | titleCase }}
+            {{ locationService.toFriendlyFormat(searchParams.originLocation) }} to {{ locationService.toFriendlyFormat(searchParams.destinationLocation) }}
           </h1>
           <h2 class="subtitle">{{ searchParams.startDate }} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{ searchParams.endDate }}</h2> 
         </div>
@@ -19,8 +19,15 @@
 </template>
 
 <script>
+import LocationService from '../services/LocationService'
+
 export default {
   props: ['isLarge', 'type', 'text', 'searchParams'],
+  data () {
+    return {
+      locationService: LocationService
+    }
+  },
   methods: {
     getHeroClass () {
       return {
