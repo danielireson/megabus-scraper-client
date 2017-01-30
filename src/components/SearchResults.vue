@@ -9,18 +9,18 @@
             <a v-show="loading" class="button is-loading box-loading"></a>
             <div v-if="!loading">
               <h3 class="search-results-date">{{ results[weekIndex][dayIndex].date }}</h3>
-              <div v-for="result in results[weekIndex][dayIndex].results" class="search-result">
+              <div v-for="result in results[weekIndex][dayIndex].journeys" class="search-result">
                 <div class="columns is-gapless">
                   <div class="column">  
-                    <span class="search-result-time">{{ result.time }}</span>
+                    <span class="search-result-time">{{ result.departure.time }}</span>
                   </div>
                   <div class="column">
-                    <a @click.prevent="goToMegabusResult(results[weekIndex][dayIndex].date)" :class="{'button': true, 'is-small': true, 'search-result-price': true, 'price-low': result.price <= prices.firstThirdPriceBound, 'price-medium': result.price > prices.firstThirdPriceBound && result.price <= prices.secondThirdPriceBound, 'price-high': result.price > prices.secondThirdPriceBound}">£{{ result.price }}</a>
+                    <a @click.prevent="goToMegabusResult(results[weekIndex][dayIndex].date)" :class="getPriceClass(result.price)">£{{ result.price }}</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-show="loading === false && results[weekIndex][dayIndex].results.length === 0">
+            <div v-show="loading === false && results[weekIndex][dayIndex].journeys.length === 0">
               No results
             </div>
           </div>
@@ -38,7 +38,19 @@
 
 <script>
 export default {
-  props: ['loading', 'results', 'prices', 'goToMegabusResult']
+  props: ['loading', 'results', 'prices', 'goToMegabusResult'],
+  methods: {
+    getPriceClass (price) {
+      return {
+        'button': true,
+        'is-small': true,
+        'search-result-price': true,
+        'price-low': price <= this.prices.firstThirdPriceBound,
+        'price-medium': price > this.prices.firstThirdPriceBound && price <= this.prices.secondThirdPriceBound,
+        'price-high': price > this.prices.secondThirdPriceBound
+      }
+    }
+  }
 }
 </script>
 
