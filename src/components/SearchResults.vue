@@ -20,9 +20,6 @@
                 </div>
               </div>
             </div>
-            <div v-show="loading === false && day.journeys.length === 0">
-              No results
-            </div>
           </div>
         </div>
         <!-- Generate blank day columns to fill the row  -->
@@ -30,7 +27,10 @@
           v-if="week.length % 7 !== 0"
           v-for="i in 7 - week.length % 7" 
           class="column is-hidden-mobile is-hidden-tablet-only">
-        </div> 
+        </div>
+      </div>
+      <div v-show="loading === false && results.length === 0" class="column box has-text-centered">
+        There are no journeys to show between those dates
       </div>
     </div>
   </section>
