@@ -28,8 +28,6 @@ export default {
         endDate: this.$route.params.endDate
       },
       loading: true,
-      originCode: LocationService.lookupCodeFromLocation(this.$route.params.originLocation),
-      destinationCode: LocationService.lookupCodeFromLocation(this.$route.params.destinationLocation),
       lengthBetweenDates: DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate),
       results: [], // Empty array for weeks and day structure
       prices: {
@@ -53,8 +51,10 @@ export default {
   },
   methods: {
     goToMegabusResult (date) {
-      let url = BASE_MEGABUS_URL + '&originCode=' + this.originCode
-      url += '&destinationCode=' + this.destinationCode
+      let originCode = LocationService.getLocationCode[this.searchParams.originLocation]
+      let destinationCode = LocationService.getLocationCode[this.searchParams.destinationLocation]
+      let url = BASE_MEGABUS_URL + '&originCode=' + originCode
+      url += '&destinationCode=' + destinationCode
       url += '&outboundDepartureDate=' + date.split('-').join('%2f')
       window.open(url)
     },
