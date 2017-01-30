@@ -13,6 +13,13 @@ var DateService = {
     }
     return true
   },
+  isInTheFuture (date) {
+    if (moment(date, 'DD-MM-YYYY') < moment()) {
+      NotificationService.showMessage('Search dates must be in the future', 'danger')
+      return false
+    }
+    return true
+  },
   isEndDateAfterStartDate (startDate, endDate) {
     if (moment(endDate, 'DD-MM-YYYY') < moment(startDate, 'DD-MM-YYYY')) {
       NotificationService.showMessage('Search start date is after the end date', 'danger')

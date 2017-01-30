@@ -12,7 +12,7 @@
           <label class="label">Start date for search</label>
           <div id="startDate">
             <select-date :date.sync="searchParams.startDate"></select-date>
-          </div>             
+          </div>
         </div>
         <div class="column is-half">
           <label class="label">Destination</label>

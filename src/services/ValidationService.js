@@ -15,6 +15,7 @@ var ValidationService = {
     return (
       DateService.isValidDate(searchParams.startDate) &&
       DateService.isValidDate(searchParams.endDate) &&
+      DateService.isInTheFuture(searchParams.startDate) &&
       DateService.isEndDateAfterStartDate(searchParams.startDate, searchParams.endDate) &&
       DateService.isMaxOneMonthInLength(searchParams.startDate, searchParams.endDate)
     )
