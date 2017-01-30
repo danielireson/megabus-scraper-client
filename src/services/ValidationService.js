@@ -23,7 +23,8 @@ var ValidationService = {
   _runLocationValidation (searchParams) {
     return (
       LocationService.isValidLocation(searchParams.originLocation) &&
-      LocationService.isValidLocation(searchParams.destinationLocation)
+      LocationService.isValidLocation(searchParams.destinationLocation) &&
+      LocationService.isNotTheSameLocation(searchParams.originLocation, searchParams.destinationLocation)
     )
   }
 }

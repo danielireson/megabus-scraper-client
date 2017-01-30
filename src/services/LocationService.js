@@ -22,6 +22,13 @@ var LocationService = {
     }
     return true
   },
+  isNotTheSameLocation (locationOne, locationTwo) {
+    if (locationOne === locationTwo) {
+      NotificationService.showMessage('You have selected the same origin and destination location', 'danger')
+      return false
+    }
+    return true
+  },
   _getLocations () {
     Vue.http.get('locations').then((response) => {
       this.state.locations = response.data.data
