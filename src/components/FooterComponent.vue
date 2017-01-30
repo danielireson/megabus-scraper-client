@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer>
     <div class="container">
       <div class="content has-text-centered">
         <p><strong>Megabus Search</strong> by <a href="http://digitalbydan.com">Daniel Ireson</a></p>
