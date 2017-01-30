@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     _goToSearchResultsPage () {
-      if (ValidationService.validate(this.searchParams)) {
+      if (ValidationService.isValid(this.searchParams)) {
         this.$router.go({name: 'search', params: this.searchParams})
       }
     }

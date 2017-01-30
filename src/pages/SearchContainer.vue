@@ -40,7 +40,7 @@ export default {
     Search
   },
   created () {
-    if (!ValidationService.validate(this.searchParams)) {
+    if (!ValidationService.isValid(this.searchParams)) {
       this.$router.go('/home')
     }
     this._makeResultsStructureArray()
