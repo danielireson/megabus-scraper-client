@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import './config/filters'
 import './config/http'
 
 import Home from './pages/Home'
