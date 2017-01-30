@@ -1,6 +1,6 @@
 <template>
   <select v-model="location">
-    <option value="" disabled selected>Select location</option>
+    <option value="" disabled>Select location</option>
     <option v-for="location in locations" :value="location">{{ locationService.toFriendlyFormat(location) }}</option>
   </select>
 </template>
