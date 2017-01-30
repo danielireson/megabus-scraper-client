@@ -62,8 +62,8 @@ export default {
         this.results = this._chunkArrayToWeeks(response.data.data)
         this._setPriceBounds(Number(response.data.stats.lowestPrice), Number(response.data.stats.highestPrice))
         this.loading = false
-      }, () => {
-        NotificationService.showMessage('There was an error scraping results', 'danger')
+      }, (error) => {
+        NotificationService.showMessage(error.data.message, 'danger')
       })
     },
     _makeApiRequest (startDate, endDate) {
