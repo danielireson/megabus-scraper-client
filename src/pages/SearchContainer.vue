@@ -86,15 +86,7 @@ export default {
       for (let day = 0; day <= this.lengthBetweenDates; day++) {
         daysArray.push(day)
       }
-
-      // Chunks into weeks
-      let chunkedWeeks = this._chunkArrayToWeeks(daysArray)
-      for (let week = 0; week < chunkedWeeks.length; week++) {
-        for (let day = 0; day < chunkedWeeks[week].length; day++) {
-          chunkedWeeks[week][day] = day
-        }
-      }
-      this.results = chunkedWeeks
+      this.results = this._chunkArrayToWeeks(daysArray)
     },
     _chunkArrayToWeeks (array) {
       let resultsChunked = []
