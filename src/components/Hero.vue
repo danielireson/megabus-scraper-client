@@ -33,9 +33,22 @@ export default {
       return {
         'hero': true,
         'is-info': true,
-        'is-medium': this.isLarge
+        'is-large': this.isLarge !== undefined
       }
     }
   }
 }
 </script>
+
+<style lang="scss">
+  .hero.is-large .hero-body {
+    padding: 100px 0;
+  }
+
+  // Tablet
+  @media only screen and (max-width : 979px) {
+    .hero.is-large .hero-body {
+      padding: 40px 20px;
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 <template>
   <header-component></header-component>
-  <hero text="The quickest way to search Megabus UK prices" is-large="true"></hero>
+  <hero text="The quickest way to search Megabus UK prices" is-large></hero>
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
       <params-form></params-form>
