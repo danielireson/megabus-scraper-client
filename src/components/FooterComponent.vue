@@ -8,3 +8,9 @@
     </div>
   </footer>
 </template>
+
+<style lang="scss">
+  footer {
+    margin-bottom: 20px;
+  }
+</style>
