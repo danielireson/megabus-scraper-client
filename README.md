@@ -1,5 +1,5 @@
 # Megabus UK Price Scraper
-A basic user interface built in Vuejs to hook into my megabus price scraper API (https://git.io/vPoZ2). Not associated with megabus.com, use at your own discretion.
+A basic user interface built in Vuejs to hook into my megabus price scraper API (https://git.io/vDZOy). Not associated with megabus.com, use at your own discretion.
 
 ![App preview](readme-image.jpg)
 
