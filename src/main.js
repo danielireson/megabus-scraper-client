@@ -5,7 +5,7 @@ import './config/filters'
 import './config/http'
 
 import Home from './pages/Home'
-import SearchContainer from './pages/SearchContainer'
+import Search from './pages/Search'
 
 Vue.use(VueRouter)
 
@@ -19,7 +19,7 @@ router.map({
   },
   '/search/:originLocation/:destinationLocation/:startDate/:endDate': {
     name: 'search',
-    component: SearchContainer
+    component: Search
   }
 })
 
