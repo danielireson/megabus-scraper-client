@@ -28,7 +28,7 @@
         </div>
       </div>
       <p class="control">
-        <a href @click.prevent="_goToSearchResultsPage" class="button is-fullwidth is-primary is-outlined">
+        <a href @click.prevent="goToSearchResultsPage" class="button is-fullwidth is-primary is-outlined">
           Search for prices
         </a>
       </p>
@@ -56,7 +56,7 @@ export default {
   watch: {
     searchParams: {
       handler (params) {
-        this._setParamsToSessionStorage(params)
+        this.setParamsToSessionStorage(params)
       },
       deep: true
     }
@@ -66,29 +66,29 @@ export default {
     SelectLocation
   },
   created () {
-    this._getParamsFromSessionStorage()
+    this.getParamsFromSessionStorage()
   },
   methods: {
-    _goToSearchResultsPage () {
+    goToSearchResultsPage () {
       if (ValidationService.isValid(this.searchParams)) {
         this.$router.go({name: 'search', params: this.searchParams})
       }
     },
-    _getParamsFromSessionStorage () {
+    getParamsFromSessionStorage () {
       this.searchParams = {
-        originLocation: this._getKeyFromSessionStorage('originLocation'),
-        destinationLocation: this._getKeyFromSessionStorage('destinationLocation'),
-        startDate: this._getKeyFromSessionStorage('startDate'),
-        endDate: this._getKeyFromSessionStorage('endDate')
+        originLocation: this.getKeyFromSessionStorage('originLocation'),
+        destinationLocation: this.getKeyFromSessionStorage('destinationLocation'),
+        startDate: this.getKeyFromSessionStorage('startDate'),
+        endDate: this.getKeyFromSessionStorage('endDate')
       }
     },
-    _setParamsToSessionStorage (params) {
+    setParamsToSessionStorage (params) {
       window.sessionStorage.setItem('originLocation', params.originLocation)
       window.sessionStorage.setItem('destinationLocation', params.destinationLocation)
       window.sessionStorage.setItem('startDate', params.startDate)
       window.sessionStorage.setItem('endDate', params.endDate)
     },
-    _getKeyFromSessionStorage (key) {
+    getKeyFromSessionStorage (key) {
       return window.sessionStorage.getItem(key) || ''
     }
   }

@@ -54,10 +54,10 @@ export default {
     done()
   },
   created () {
-    this._makeResultsStructureArray()
+    this.makeResultsStructureArray()
   },
   ready () {
-    this._getResults()
+    this.getResults()
   },
   methods: {
     goToMegabusResult (date) {
@@ -68,16 +68,16 @@ export default {
       url += '&outboundDepartureDate=' + date.split('-').join('%2f')
       window.open(url)
     },
-    _getResults () {
-      this._makeApiRequest().then((response) => {
-        this.results = this._chunkArrayToWeeks(response.data.data)
-        this._setPriceBounds(Number(response.data.stats.lowestPrice), Number(response.data.stats.highestPrice))
+    getResults () {
+      this.makeApiRequest().then((response) => {
+        this.results = this.chunkArrayToWeeks(response.data.data)
+        this.setPriceBounds(Number(response.data.stats.lowestPrice), Number(response.data.stats.highestPrice))
         this.loading = false
       }, (error) => {
         NotificationService.showMessage(error.data.message, 'danger')
       })
     },
-    _makeApiRequest (startDate, endDate) {
+    makeApiRequest (startDate, endDate) {
       let url = 'search/'
       url += this.searchParams.originLocation + '/'
       url += this.searchParams.destinationLocation + '/'
@@ -85,21 +85,21 @@ export default {
       url += this.searchParams.endDate + '/'
       return this.$http.get(url)
     },
-    _setPriceBounds (lowestPrice, highestPrice) {
+    setPriceBounds (lowestPrice, highestPrice) {
       let range = highestPrice - lowestPrice
       let boundRange = range / 3
       this.prices.firstThirdPriceBound = lowestPrice + boundRange
       this.prices.secondThirdPriceBound = lowestPrice + (boundRange * 2)
     },
-    _makeResultsStructureArray () {
+    makeResultsStructureArray () {
       // Builds the required column layout before the api returns results
       let daysArray = []
       for (let day = 0; day <= this.lengthBetweenDates; day++) {
         daysArray.push(day)
       }
-      this.results = this._chunkArrayToWeeks(daysArray)
+      this.results = this.chunkArrayToWeeks(daysArray)
     },
-    _chunkArrayToWeeks (array) {
+    chunkArrayToWeeks (array) {
       let resultsChunked = []
       for (let i = 0; i < array.length; i += 7) {
         let temp = array.slice(i, i + 7)
