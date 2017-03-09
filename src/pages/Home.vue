@@ -2,7 +2,7 @@
   <header-component></header-component>
   <hero text="The quickest way to search Megabus UK prices" is-large></hero>
   <div class="columns">
-    <div class="column is-half is-offset-one-quarter">
+    <div class="column is-10 is-offset-1 is-8-desktop is-offset-2-desktop">
       <params-form></params-form>
     </div>
   </div>
