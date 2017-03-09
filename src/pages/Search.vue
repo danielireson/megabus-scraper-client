@@ -36,6 +36,7 @@ export default {
       lengthBetweenDates: DateService.getLengthBetweenDates(this.$route.params.startDate, this.$route.params.endDate),
       results: [],
       prices: {
+        lowestPrice: null,
         firstThirdPriceBound: null,
         secondThirdPriceBound: null
       }
@@ -88,6 +89,7 @@ export default {
     setPriceBounds (lowestPrice, highestPrice) {
       let range = highestPrice - lowestPrice
       let boundRange = range / 3
+      this.prices.lowestPrice = lowestPrice
       this.prices.firstThirdPriceBound = lowestPrice + boundRange
       this.prices.secondThirdPriceBound = lowestPrice + (boundRange * 2)
     },

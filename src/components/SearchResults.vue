@@ -13,10 +13,12 @@
               <div v-for="journey in day.journeys" class="search-result">
                 <div class="columns is-gapless">
                   <div class="column">  
-                    <span class="search-result-time">{{ journey.departure.time }}</span>
+                    <span class="search-result-time">
+                      {{ journey.departure.time }}
+                    </span>
                   </div>
                   <div class="column">
-                    <a @click.prevent="goToMegabusResult(day.date)" :class="getPriceClass(journey.price)">£{{ journey.price }}</a>
+                    <a @click.prevent="goToMegabusResult(day.date)" :class="getPriceClass(journey.price)">£{{ journey.price }}<i v-if="journey.price == prices.lowestPrice" class="search-result-cheapest fa fa-star-o" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
@@ -80,6 +82,12 @@ export default {
     line-height: 24px;
     margin-right: 5px;
     text-align: right;
+  }
+
+  .search-result-cheapest {
+    font-size: 1em;
+    margin-left: 5px;
+    vertical-align: baseline;
   }
 
   .search-result-price {
