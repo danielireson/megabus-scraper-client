@@ -104,6 +104,10 @@ export default {
 </script>
 
 <style lang="scss">
+  label {
+    cursor: default;
+  }
+
   .label-link {
     float: right;
     font-size: 0.8em;
