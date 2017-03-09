@@ -9,7 +9,10 @@
               <select-location :location.sync="searchParams.originLocation"></select-location>
             </span>
           </p> 
-          <label class="label">Start date for search</label>
+          <label class="label">
+            Start date for search 
+            <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
+          </label>
           <div id="startDate">
             <select-date :date.sync="searchParams.startDate"></select-date>
           </div>
@@ -24,7 +27,7 @@
           <label class="label">End date for search</label>
           <div id="endDate">
             <select-date :date.sync="searchParams.endDate"></select-date>
-          </div>          
+          </div>
         </div>
       </div>
       <p class="control">
@@ -37,6 +40,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import ValidationService from '../services/ValidationService'
 
 import SelectDate from '../components/SelectDate'
@@ -69,6 +74,9 @@ export default {
     this.getParamsFromSessionStorage()
   },
   methods: {
+    setStartDateTomorrow () {
+      this.searchParams.startDate = moment().add(1, 'days').format('DD-MM-YYYY')
+    },
     goToSearchResultsPage () {
       if (ValidationService.isValid(this.searchParams)) {
         this.$router.go({name: 'search', params: this.searchParams})
@@ -94,3 +102,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .label-link {
+    float: right;
+    font-size: 0.8em;
+    margin-left: 5px;
+    margin-top: 3px;
+  }
+
+  // Mobile
+  @media only screen and (max-width : 768px) {
+    .label-link {
+      display: none;
+    }
+  }
+</style>
