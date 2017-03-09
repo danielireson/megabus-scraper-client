@@ -84,6 +84,8 @@ module.exports = {
     loaders: utils.cssLoaders()
   },
   plugins: [
-    new Dotenv()
+    new Dotenv({
+      path: process.env.NODE_ENV === 'production' ? './.env.production' : './.env'
+    })
   ]
 }
