@@ -8,21 +8,13 @@
               <i class="fa fa-search"></i>Megabus Search
             </a>
           </div>
-          <div class="nav-right nav-menu">
-            <span class="nav-item">
-              <a href="https://github.com/danielireson/megabus-scraper-client" class="button is-info is-inverted" target="_blank">
+          <div v-if="showEditSearchButton" class="nav-right">
+            <span class="nav-item edit-button">
+              <a v-link="'/'" class="button is-info is-inverted">
                 <span class="icon">
-                  <i class="fa fa-github"></i>
+                  <i class="fa fa-pencil-square-o"></i>
                 </span>
-                <span>Web Client</span>
-              </a>
-            </span>
-            <span class="nav-item">
-              <a href="https://github.com/danielireson/megabus-scraper-nodejs" class="button is-info is-inverted" target="_blank">
-                <span class="icon">
-                  <i class="fa fa-github"></i>
-                </span>
-                <span>Node.js API</span>
+                <span class="is-hidden-mobile">Edit search</span>
               </a>
             </span>
           </div>
@@ -41,6 +33,7 @@
 import NotificationService from '../services/NotificationService.js'
 
 export default {
+  props: ['showEditSearchButton'],
   data () {
     return {
       notificationService: NotificationService
@@ -68,14 +61,14 @@ export default {
     right: 20px;
   }
 
-  .is-hidden {
-    display: none;
-  }
-
   // Tablet
   @media only screen and (max-width : 980px) {
     .nav-left {
       padding-left: 20px;
+    }
+
+    .nav-right {
+      padding-right: 20px !important;
     }
 
     .notification {
@@ -86,8 +79,10 @@ export default {
   }
 
   // Mobile
-  @media only screen and (max-width : 768px) {
-    
+  @media only screen and (max-width : 768px) {    
+    .edit-button .icon {
+      margin-right: 0 !important;
+    }    
   }
 
 </style>

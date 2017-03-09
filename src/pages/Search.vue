@@ -1,5 +1,5 @@
 <template>
-  <header-component></header-component>
+  <header-component show-edit-search-button="true"></header-component>
   <hero :search-params="searchParams"></hero>
   <search-results
     :loading="loading"
