@@ -24,7 +24,11 @@
               <select-location :location.sync="searchParams.destinationLocation"></select-location>
             </span>
           </p> 
-          <label class="label">End date for search</label>
+          <label class="label">
+            End date for search
+            <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
+            <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
+          </label>
           <div id="endDate">
             <select-date :date.sync="searchParams.endDate"></select-date>
           </div>
@@ -76,6 +80,14 @@ export default {
   methods: {
     setStartDateTomorrow () {
       this.searchParams.startDate = moment().add(1, 'days').format('DD-MM-YYYY')
+    },
+    setEndDateSevenDays () {
+      let newDate = moment(this.searchParams.startDate, 'DD-MM-YYYY').add(7, 'days').format('DD-MM-YYYY')
+      this.searchParams.endDate = newDate
+    },
+    setEndDateFourteenDays () {
+      let newDate = moment(this.searchParams.startDate, 'DD-MM-YYYY').add(14, 'days').format('DD-MM-YYYY')
+      this.searchParams.endDate = newDate
     },
     goToSearchResultsPage () {
       if (ValidationService.isValid(this.searchParams)) {
