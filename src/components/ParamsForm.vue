@@ -74,7 +74,7 @@ export default {
     SelectDate,
     SelectLocation
   },
-  created () {
+  ready () {
     this.getParamsFromSessionStorage()
   },
   methods: {
