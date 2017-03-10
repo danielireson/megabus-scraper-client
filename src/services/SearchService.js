@@ -7,16 +7,9 @@ import LocationService from '../services/LocationService'
 import NotificationService from './NotificationService'
 
 var SearchService = {
-  state: {
-    loading: true,
-    results: [],
-    prices: {
-      lowestPrice: null,
-      firstThirdPriceBound: null,
-      secondThirdPriceBound: null
-    }
-  },
+  state: {},
   getResults (searchParams) {
+    this._resetState()
     this._makeResultsStructureArray(searchParams.startDate, searchParams.endDate)
     Vue.http.get(this._buildApiRequestUrl(searchParams)).then((response) => {
       this.state.results = this._chunkArrayToWeeks(response.data.data)
@@ -68,7 +61,19 @@ var SearchService = {
     }
 
     return resultsChunked
+  },
+  _resetState () {
+    this.state = {
+      loading: true,
+      results: [],
+      prices: {
+        lowestPrice: null,
+        firstThirdPriceBound: null,
+        secondThirdPriceBound: null
+      }
+    }
   }
 }
 
+SearchService._resetState()
 export default SearchService
