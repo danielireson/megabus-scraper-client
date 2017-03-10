@@ -33,7 +33,7 @@ var LocationService = {
     Vue.http.get('locations').then((response) => {
       this.state.locations = response.data.data
     }, () => {
-      NotificationService.showMessage('Error getting locations', 'danger')
+      NotificationService.showMessage('Error getting locations', 'danger', false)
     })
   }
 }

@@ -75,7 +75,7 @@ export default {
         this.setPriceBounds(Number(response.data.stats.lowestPrice), Number(response.data.stats.highestPrice))
         this.loading = false
       }, (error) => {
-        NotificationService.showMessage(error.data.message, 'danger')
+        NotificationService.showMessage(error.data.message, 'danger', false)
       })
     },
     makeApiRequest (startDate, endDate) {
