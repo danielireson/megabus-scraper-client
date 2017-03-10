@@ -15,8 +15,8 @@ var SearchService = {
       this.state.results = this._chunkArrayToWeeks(response.data.data)
       this._setPriceBounds(response.data.stats.lowestPrice, response.data.stats.highestPrice)
       this.state.loading = false
-    }, (error) => {
-      NotificationService.showMessage(error.data.message, 'danger', false)
+    }, () => {
+      NotificationService.showMessage('Error searching prices', 'danger', false)
     })
   },
   goToMegabusResult (searchParams, date) {
