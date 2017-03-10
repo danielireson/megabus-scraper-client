@@ -18,7 +18,7 @@
                     </span>
                   </div>
                   <div class="column">
-                    <a @click.prevent="goToMegabusResult(day.date)" :class="getPriceClass(journey.price)">£{{ journey.price }}<i v-if="journey.price == prices.lowestPrice" class="search-result-cheapest fa fa-star-o" aria-hidden="true"></i></a>
+                    <a @click.prevent="searchService.goToMegabusResult(searchParams, day.date)" :class="getPriceClass(journey.price)">£{{ journey.price }}<i v-if="journey.price == prices.lowestPrice" class="search-result-cheapest fa fa-star-o" aria-hidden="true"></i></a>
                   </div>
                 </div>
               </div>
@@ -40,8 +40,15 @@
 </template>
 
 <script>
+import SearchService from '../services/SearchService'
+
 export default {
-  props: ['loading', 'results', 'prices', 'goToMegabusResult'],
+  props: ['searchParams', 'loading', 'results', 'prices'],
+  data () {
+    return {
+      searchService: SearchService
+    }
+  },
   methods: {
     getPriceClass (price) {
       return {
