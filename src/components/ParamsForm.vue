@@ -123,14 +123,15 @@ export default {
   .label-link {
     float: right;
     font-size: 0.8em;
-    margin-left: 5px;
-    margin-top: 3px;
+    margin: 3px 0 0 5px;
   }
 
   // Mobile
   @media only screen and (max-width : 768px) {
     .label-link {
-      display: none;
+      display: inline-block;
+      float: none;
+      margin: 0 5px 0 0;
     }
   }
 </style>
