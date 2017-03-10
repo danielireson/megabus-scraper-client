@@ -19,3 +19,7 @@ Vue.filter('dateToSlashes', function (date) {
 Vue.filter('dateToDayOfWeek', function (date) {
   return moment(date, 'DD-MM-YYYY').format('dddd')
 })
+
+Vue.filter('dateToCalendar', function (date) {
+  return moment(date, 'DD-MM-YYYY').format('MMMM Do YYYY')
+})
