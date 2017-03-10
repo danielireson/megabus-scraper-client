@@ -2,7 +2,7 @@
   "name": "megabus-scraper-client",
   "version": "1.0.0",
   "description": "A basic UI to hook into the megabus-scraper-server spark API",
-  "author": "Daniel Ireson <daniel@djgraphics.co.uk>",
+  "author": "Daniel Ireson <danielireson@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
