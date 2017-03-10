@@ -9,12 +9,6 @@ var LocationService = {
   getLocationCode (location) {
     return this.state.locations[location.toLowerCase()]
   },
-  toFriendlyFormat (location) {
-    let noDashes = location.replace(/-/g, ' ')
-    return noDashes.replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    })
-  },
   isValidLocation (location) {
     if (!(location.toLowerCase() in this.state.locations)) {
       NotificationService.showMessage('Invalid location selected', 'danger')
