@@ -6,7 +6,7 @@
           <h1 class="title">
             {{ searchParams.originLocation | locationKeyToFriendlyText}} to {{ searchParams.destinationLocation | locationKeyToFriendlyText }}
           </h1>
-          <h2 class="subtitle">{{ searchParams.startDate | dateToSlashes }} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{ searchParams.endDate | dateToSlashes }}</h2> 
+          <h2 class="subtitle">{{ searchParams.startDate | dateToCalendar }} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{ searchParams.endDate | dateToCalendar }}</h2> 
         </div>
         <div v-else>
           <h1 class="title">
