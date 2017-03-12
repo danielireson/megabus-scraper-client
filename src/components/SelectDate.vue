@@ -1,6 +1,6 @@
 <template>
   <datepicker 
-    placeholder="Select date" 
+    placeholder="..." 
     :config="{ dateFormat: 'd-m-Y' }"
     :value.sync="date">
   </datepicker>
