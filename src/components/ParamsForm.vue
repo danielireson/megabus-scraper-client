@@ -10,8 +10,10 @@
             </span>
           </p> 
           <label class="label">
-            Start date for search 
-            <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
+            Start date for search
+            <div class="label-link-container">
+              <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
+            </div>
           </label>
           <div id="startDate">
             <select-date :date.sync="searchParams.startDate"></select-date>
@@ -23,11 +25,13 @@
             <span class="select is-fullwidth">
               <select-location :location.sync="searchParams.destinationLocation"></select-location>
             </span>
-          </p> 
+          </p>
           <label class="label">
             End date for search
-            <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
-            <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
+            <div class="label-link-container">
+              <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
+              <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
+            </div>
           </label>
           <div id="endDate">
             <select-date :date.sync="searchParams.endDate"></select-date>
@@ -120,6 +124,11 @@ export default {
     cursor: default;
   }
 
+  .label-link-container {
+    display: inline-block;
+    float: right;
+  }
+
   .label-link {
     float: right;
     font-size: 0.8em;
@@ -128,6 +137,11 @@ export default {
 
   // Mobile
   @media only screen and (max-width : 768px) {
+    .label-link-container {
+      display: block;
+      float: none;
+    }
+
     .label-link {
       display: inline-block;
       float: none;
