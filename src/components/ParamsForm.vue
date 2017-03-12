@@ -9,7 +9,7 @@
           </span>
         </p> 
         <label class="label">
-          Start date for search
+          Start date
           <div class="label-link-container">
             <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
           </div>
@@ -26,7 +26,7 @@
           </span>
         </p>
         <label class="label">
-          End date for search
+          End date
           <div class="label-link-container">
             <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
             <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
