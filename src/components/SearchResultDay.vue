@@ -5,6 +5,9 @@
       <div v-if="!loading">
         <h3>{{ day.date | dateToDayOfWeek }}</h3>
         <h3 class="search-results-date">{{ day.date | dateToSlashes }}</h3>
+        <div v-show="day.journeys.length === 0">
+          No results
+        </div>
         <div v-for="journey in day.journeys" class="search-result">
           <div class="columns is-gapless">
             <div class="column">  
