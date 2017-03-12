@@ -1,49 +1,47 @@
 <template>
   <section class="section">
-    <div class="container">
-      <div class="columns is-mobile">
-        <div class="column is-half">
-          <label class="label">Origin</label>
-          <p class="control">
-            <span class="select is-fullwidth">
-              <select-location :location.sync="searchParams.originLocation"></select-location>
-            </span>
-          </p> 
-          <label class="label">
-            Start date for search
-            <div class="label-link-container">
-              <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
-            </div>
-          </label>
-          <div id="startDate">
-            <select-date :date.sync="searchParams.startDate"></select-date>
+    <div class="columns is-mobile">
+      <div class="column is-half">
+        <label class="label">Origin</label>
+        <p class="control">
+          <span class="select is-fullwidth">
+            <select-location :location.sync="searchParams.originLocation"></select-location>
+          </span>
+        </p> 
+        <label class="label">
+          Start date for search
+          <div class="label-link-container">
+            <a href @click.prevent="setStartDateTomorrow()" class="label-link">tomorrow</a>
           </div>
-        </div>
-        <div class="column is-half">
-          <label class="label">Destination</label>
-          <p class="control">
-            <span class="select is-fullwidth">
-              <select-location :location.sync="searchParams.destinationLocation"></select-location>
-            </span>
-          </p>
-          <label class="label">
-            End date for search
-            <div class="label-link-container">
-              <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
-              <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
-            </div>
-          </label>
-          <div id="endDate">
-            <select-date :date.sync="searchParams.endDate"></select-date>
-          </div>
+        </label>
+        <div id="startDate">
+          <select-date :date.sync="searchParams.startDate"></select-date>
         </div>
       </div>
-      <p class="control">
-        <a href @click.prevent="goToSearchResultsPage" class="button is-fullwidth is-primary is-outlined">
-          Search for prices
-        </a>
-      </p>
+      <div class="column is-half">
+        <label class="label">Destination</label>
+        <p class="control">
+          <span class="select is-fullwidth">
+            <select-location :location.sync="searchParams.destinationLocation"></select-location>
+          </span>
+        </p>
+        <label class="label">
+          End date for search
+          <div class="label-link-container">
+            <a href @click.prevent="setEndDateFourteenDays()" class="label-link">+14 days</a>
+            <a href @click.prevent="setEndDateSevenDays()" class="label-link">+7 days</a>
+          </div>
+        </label>
+        <div id="endDate">
+          <select-date :date.sync="searchParams.endDate"></select-date>
+        </div>
+      </div>
     </div>
+    <p class="control">
+      <a href @click.prevent="goToSearchResultsPage" class="button is-fullwidth is-primary is-outlined">
+        Search for prices
+      </a>
+    </p>
   </section>
 </template>
 
